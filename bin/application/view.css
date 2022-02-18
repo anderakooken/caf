@@ -1,0 +1,25 @@
+*.table-view *.column-header *.label{
+	
+    /*-fx-text-fill: #2f00ff;*/
+  	 -fx-alignment: CENTER-RIGHT;
+    
+  /* -fx-font-size: 13px;*/
+ }
+#my-table .table-column {
+ 	 -fx-alignment: CENTER-RIGHT;
+      -fx-font-size: 13px;
+ /* -fx-background-insets: 0, 0 0 1 0;*/
+}
+ 
+
+#menugeral{
+     -fx-background-image: url(images/menu.png);
+  -fx-background-repeat: no-repeat;
+  -fx-background-size: 15px;
+  -fx-background-position: center;
+   -fx-background-radius: 5.0; 
+}
+
+#menulogin{
+    -fx-background-radius: 5.0; 
+}
