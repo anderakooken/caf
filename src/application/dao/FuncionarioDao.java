@@ -37,7 +37,7 @@ public class FuncionarioDao {
 			}
 			
 			
-			Main.dialogBox("Funcion·rio cadastrado com sucesso!", 2);
+			Main.dialogBox("Funcion√°rio cadastrado com sucesso!", 2);
 	}
 	
 	public List<Funcionario> listFun(String where){

@@ -26,13 +26,11 @@ public class CAF_inicio_Controller {
     private Stage stage = Main.Stagemain;
     private MainDao dao = new MainDao();
     
-    String msg_a = "Você não tem permissão de acesso.";
+    String msg_a = "VocÃª nÃ£o tem permissÃ£o de acesso.";
     
     @FXML void initialize() {
     	txtuser.setText("andre.cavalcante");;
     	txtpw.setText("truco");
-    	
-    	menum.setStyle("-fx-border-radius:5");
     }
     
     @FXML void btnlogar(ActionEvent event) {
@@ -41,11 +39,11 @@ public class CAF_inicio_Controller {
     			txtpw.getText().isEmpty()
     		) {
     	
-    			Main.dialogBox("Digite um Usuário e Senha!", 1);
+    			Main.dialogBox("Digite um UsuÃ¡rio e Senha!", 1);
 
     		} else {
     			
-    			//verificação na funcaoo do banco de dados
+    			//verificaï¿½ï¿½o na funcaoo do banco de dados
     			if (dao.UserConfirm(
     					txtuser.getText(), 
     					txtpw.getText())
@@ -59,14 +57,14 @@ public class CAF_inicio_Controller {
     				txtuser.setText("");
     				txtpw.setText("");
     			} else {
-    				Main.dialogBox("Nome de Usuário ou Senha incorreto!", 1);
+    				Main.dialogBox("Nome de UsuÃ¡rio ou Senha incorreto!", 1);
     			}
     		}
     }
     @FXML void openmenuref(ActionEvent event) {
     	if (Main.user.getNvacesso() <= 2) {
 
-			Main.modify.modify("view/CAF_refeitorio.fxml", "Controle de Acesso - Refeitório");
+			Main.modify.modify("view/CAF_refeitorio.fxml", "Controle de Acesso - RefeitÃ³rio");
 			
 			stage.setOnCloseRequest(e -> e.consume());
 
@@ -78,7 +76,7 @@ public class CAF_inicio_Controller {
     
     @FXML void openmenufun(ActionEvent event) {
     	if(Main.user.getNvacesso() <= 1) {
-    		Main.modify.modify("view/CAF_funcionarios.fxml", "Controle de Acesso - Cadastro de Funcionários");
+    		Main.modify.modify("view/CAF_funcionarios.fxml", "Controle de Acesso - Cadastro de FuncionÃ¡rios");
     		
     		stage.setOnCloseRequest(e -> e.consume());
     	} else {
@@ -99,7 +97,23 @@ public class CAF_inicio_Controller {
 
     
     @FXML void openmenurel(ActionEvent event) {
-
+    	if(Main.user.getNvacesso() <= 1) {
+    		Main.modify.modify("view/CAF_relatorio.fxml", "CAF - RelatÃ³rio");
+    		
+    		stage.setOnCloseRequest(e -> e.consume());
+    	} else {
+			Main.dialogBox(msg_a, 1);
+		}
+    }
+    
+    @FXML void openalterpw(ActionEvent event) {
+    	if(Main.user.getNvacesso() <= 1) {
+    		Main.modify.modify("view/CAF_login_alterpw.fxml", "CAF - Alterar Senha");
+    		
+    		stage.setOnCloseRequest(e -> e.consume());
+    	} else {
+			Main.dialogBox(msg_a, 1);
+		}
     }
     
     

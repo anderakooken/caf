@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="253.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" fx:controller="application.controller.CAF_relatorio_Controller" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="253.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane layoutX="125.0" layoutY="25.0" prefHeight="60.0" prefWidth="250.0">
         <columnConstraints>
@@ -26,7 +26,7 @@
             </Label>
          </children>
       </GridPane>
-      <GridPane fx:id="gridduplo" layoutX="9.0" layoutY="135.0" prefHeight="43.0" prefWidth="482.0" style="-fx-border-color: black; -fx-border-radius: 5;">
+      <GridPane layoutX="9.0" layoutY="135.0" prefHeight="43.0" prefWidth="482.0" style="-fx-border-color: black; -fx-border-radius: 5;">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="90.0" minWidth="90.0" prefWidth="90.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

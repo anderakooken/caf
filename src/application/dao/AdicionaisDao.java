@@ -32,7 +32,7 @@ public class AdicionaisDao {
 			break;
 		case 2:
 			sql = "UPDATE tb_adcionais SET qtdlib='"+f.get("quantidade")+"', idusuario='"+Main.user.getMatricula()+"' WHERE matricula='"+f.get("matricula")+"'";
-			msg="Atualização realizada com sucesso!";
+			msg="AtualizaÃ§Ã£o realizada com sucesso!";
 			c= "Atualizar";
 			break;
 		}

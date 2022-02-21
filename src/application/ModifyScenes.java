@@ -16,7 +16,7 @@ import javafx.stage.WindowEvent;
 
 public class ModifyScenes {
 	static Stage stage;
-	// i é a contagem de stages
+	// i ï¿½ a contagem de stages
 	static int i=0; 
 	//List para listar todos os stages
 	public static List<Stage>listS = new ArrayList<>();

@@ -5,9 +5,6 @@ module CAF {
 	requires javafx.graphics;
 	requires javafx.base;
 	requires java.desktop;
-	requires org.apache.poi.ooxml;
-	requires org.apache.poi.poi;
-	
 	opens application.controller;
 	opens application.dao;
 	opens util;

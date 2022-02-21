@@ -1,20 +1,15 @@
 package application.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import application.ArquivoTxt;
+import application.Main;
 import application.dao.RelatorioDao;
 import application.model.Combobox;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 
 public class CAF_relatorio_Controller {
-	 
-    private @FXML GridPane gridduplo;
 
     
     private @FXML DatePicker datafim;
@@ -30,16 +25,23 @@ public class CAF_relatorio_Controller {
 
     
     private RelatorioDao dao = new RelatorioDao();
-    private ArquivoTxt txt = new ArquivoTxt();
     private @FXML void initialize() {
-    	gridduplo.setVisible(false);
     	carregarItems();
     }
     
     @FXML void imprimir(ActionEvent event) {
-    	switch(cbrelatorio.getValue().getId()) {
-    	case 5:
-    		//txt.writeRelNutrinor("dia", , null);
+    	if(cbrelatorio !=null) {
+    		if(dataini.getValue() == null || datafim.getValue() == null) {
+    			Main.dialogBox("As datas não podem ser nulas!", 1);
+    			return;
+    		}
+	    	switch(cbrelatorio.getValue().getId()) {
+	    	case 5:
+	    		ArquivoTxt.writeRelNutrinor("dia", dataini.getValue().toString(), datafim.getValue().toString());
+	    		break;
+	    	case 4:
+	    		ArquivoTxt.writeRelNutrinor("periodo", dataini.getValue().toString(), datafim.getValue().toString());
+	    	}
     	}
     }
     private @FXML void change() {
@@ -50,7 +52,7 @@ public class CAF_relatorio_Controller {
     	} else if(cbrelatorio.getValue().getId() == 3) {
     		
     	} else if(cbrelatorio.getValue().getId() == 4) {
-    		gridduplo.setVisible(true);
+    		
     	} else if(cbrelatorio.getValue().getId() == 5) {
     		
     	}

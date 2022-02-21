@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="900.0" style="-fx-background-color: #3333;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CAF_inicio_Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="900.0" style="-fx-background-color: #3333;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CAF_inicio_Controller">
    <children>
       <MenuBar id="menu" fx:id="menu" disable="true" minHeight="24.0" minWidth="30.0" prefHeight="27.0" prefWidth="900.0">
         <menus>
@@ -15,13 +18,13 @@
                   <MenuItem mnemonicParsing="false" onAction="#openmenuref" text="Refeitorio" />
                   <MenuItem mnemonicParsing="false" onAction="#openmenufun" text="Funcionários" />
                   <MenuItem mnemonicParsing="false" onAction="#openmenuadi" text="Adicionais" />
-                  <MenuItem mnemonicParsing="false" text="Relatórios" />
+                  <MenuItem mnemonicParsing="false" text="Relatórios" onAction="#openmenurel"/>
                   <Menu id="menulogin" mnemonicParsing="false" text="Login">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Alterar Senha" />
-                        <MenuItem mnemonicParsing="false" text="Eventos" />
-                        <MenuItem mnemonicParsing="false" text="Refeições Dia" />
-                        <MenuItem mnemonicParsing="false" text="Exportar" />
+                        <MenuItem mnemonicParsing="false" text="Alterar Senha" onAction="#openalterpw" />
+                        <MenuItem mnemonicParsing="false" text="Eventos" visible="false" />
+                        <MenuItem mnemonicParsing="false" text="Refeições Dia" visible="false" />
+                        <MenuItem mnemonicParsing="false" text="Exportar" visible="false"  />
                         <MenuItem mnemonicParsing="false" onAction="#Logout" text="Logout" />
                      </items>
                   </Menu>

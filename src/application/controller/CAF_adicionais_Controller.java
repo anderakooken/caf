@@ -49,10 +49,10 @@ public class CAF_adicionais_Controller {
     		return;
     	}
     	setFun();
-		if(Main.ConfirmationDialog("Cadastrar", "Você tem certeza disso?").get() == ButtonType.OK) {
+		if(Main.ConfirmationDialog("Cadastrar", "VocÃª tem certeza disso?").get() == ButtonType.OK) {
 			List<Funcionario> flist = dao.listAdcionais("WHERE emp_matricula=" + txtmatricula.getText());
 			if(flist.size()>0) {
-				Main.dialogBox("Não se pode cadastrar a mesma matricula duas vezes!", 1);
+				Main.dialogBox("Nï¿½o se pode cadastrar a mesma matricula duas vezes!", 1);
 				txtnome.setText(flist.get(0).get("nome"));
 				txtsetor.setText(flist.get(0).get("setor"));
 				txtfuncao.setText(flist.get(0).get("funcao"));
@@ -72,7 +72,7 @@ public class CAF_adicionais_Controller {
         		return;
         	}
         	setFun();
-    		if(Main.ConfirmationDialog("Editar", "Você tem certeza disso?").get() == ButtonType.OK) {
+    		if(Main.ConfirmationDialog("Editar", "VocÃª tem certeza disso?").get() == ButtonType.OK) {
     			dao.CE(f, 2);
     			limpar();
     			initTable();

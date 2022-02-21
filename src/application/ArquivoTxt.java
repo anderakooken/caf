@@ -29,11 +29,11 @@ public class ArquivoTxt {
 						+ "\n*******************************"
 						+"\n          "+status.toUpperCase()
 						+ "\n*******************************"
-						+"\nID Cartão: " + idcartao
+						+"\nID CartÃ£o: " + idcartao
 						+"\nMatricula: " + fun.get(0).get("matricula")
 						+"\nNome: " + fun.get(0).get("nome")
 						+"\nSetor: " + fun.get(0).get("setor")
-						+"\nFunçao: " + fun.get(0).get("funcao")
+						+"\nFunÃ§Ã£o: " + fun.get(0).get("funcao")
 						+"\nUltimo Acesso: " + ultimoacesso
 						+ "\n*******************************");
 						
@@ -53,9 +53,6 @@ public class ArquivoTxt {
 		String data = "";
 		String caminho = "C:\\Mais Sabor\\CAF\\relatorio"+tprelatorio+".txt"; 
 		List<Registro> registro = new ArrayList<>();
-		if(DataFim == null) {
-			DataFim = DataIni;
-		}
 		if(tprelatorio.toLowerCase().equals("dia")) {
 			registro = daorel.RelatorioList("relDia", DataIni, DataFim);
 			data = DataIni;
@@ -74,17 +71,15 @@ public class ArquivoTxt {
 				datar = "";
 				p.println("    ***CONTROLE DE ACESSO***\r\n"
 						+ "*******************************\r\n\n"
-						+ "     EXTRATO DE REFEIÇÕES");
+						+ "     EXTRATO DE REFEIÃ‡Ã•ES");
 				
 				for(int i = 0; i<registro.size(); i++) {
-					System.out.println(registro.size());
 					reg = new Registro();
 					reg = registro.get(i);
-					System.out.println(datar);
 					if(datar.isEmpty() || !(datar.equals(reg.get("datareg")))) {
 						p.println("\n*******************************"
 								+ "\n\nData:     " + reg.get("datareg")
-								+ "\n\n     Refeição          Qtd"
+								+ "\n\n     RefeiÃ§Ã£o          Qtd"
 								+ "\n     _____________________");
 					}
 					p.println("\n     "+reg.get("idtipo")+"  -  "+reg.get("tipo")+"  ("+reg.get("quantidade")+")");
@@ -93,10 +88,10 @@ public class ArquivoTxt {
 			}else if(tprelatorio.toLowerCase().equals("periodo")) {
 				p.println("  ***CONTROLE DE ACESSO***\r\n"
 						+ "*******************************\r\n"
-						+ "     EXTRATO DE REFEIÇÕES");
+						+ "     EXTRATO DE REFEIÃ‡Ã•ES");
 				p.println("\n*******************************"
 						+ "\n\nData:     " + data
-						+ "\n\n     Refeição          Qtd"
+						+ "\n\n     RefeiÃ§Ã£o          Qtd"
 						+ "\n     _____________________");
 				for(int i = 0; i<registro.size(); i++) {
 					reg = new Registro();
@@ -110,7 +105,7 @@ public class ArquivoTxt {
 						+ "     					      FATURA MENSAL\r\n"
 						+ "     \r\n"
 						+ "\r\n"
-						+ "Refeição     |     Data	|Consumido|ConsumoMin|Diferença|Quentinhas|Total ref. |	Vr Unitário |  Valor Total\r\n"
+						+ "RefeiÃ§Ã£o     |     Data	|Consumido|ConsumoMin|DiferenÃ§a|Quentinhas|Total ref. |	Vr UnitÃ¡rio |  Valor Total\r\n"
 						+ "__________________________________________________________________________________________________________\r\n");
 				
 				

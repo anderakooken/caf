@@ -34,9 +34,9 @@ public class CAF_refeitorio_relatorio_Controller {
     void CarregarItems() {
     	List<Combobox> l = new ArrayList<>();
     	ObservableList<Combobox> obs;
-    	Combobox c = new Combobox(1, "Extrato Refeições Período");
+    	Combobox c = new Combobox(1, "Extrato RefeiÃ§Ãµes PerÃ­odo");
     	l.add(c);
-    	c = new Combobox(2, "Extrato Refeições Dia");
+    	c = new Combobox(2, "Extrato RefeiÃ§Ãµes Dia");
     	l.add(c);
     	obs = FXCollections.observableArrayList(l);
     	cbrelatorio.setItems(obs);
@@ -45,18 +45,21 @@ public class CAF_refeitorio_relatorio_Controller {
     @FXML void imprimir(ActionEvent event) {
     	if(cbrelatorio.getValue().getId() == 1) {
     		if(dpini.getValue() == null || dpfim.getValue() == null) {
-    			Main.dialogBox("As datas não podem ser vazias", 1);
+    			Main.dialogBox("As datas nÃ£o podem ser vazias", 1);
     			return;
     		}
     		ArquivoTxt.writeRelNutrinor("periodo", dpini.getValue().toString(), dpfim.getValue().toString());
     	}
     	else if(cbrelatorio.getValue().getId() == 2) {
+    		if(dpfim.getValue() == null) {
+    			dpfim.setValue(dpini.getValue());
+    		}
     		if(dpini.getValue() == null) {
-    			Main.dialogBox("A data não pode ser vazia!", 1);
+    			Main.dialogBox("A data nÃ£o pode ser vazia!", 1);
     			return;
     		}
     		ArquivoTxt.writeRelNutrinor("dia", dpini.getValue().toString(), dpfim.getValue().toString());
-    		//excel.CriareImprimirRelatorioNutrionor("Relatório do Dia "+dateuni.getValue(), null, null, null, null);
+    		//excel.CriareImprimirRelatorioNutrionor("Relatï¿½rio do Dia "+dateuni.getValue(), null, null, null, null);
     	}
     }
 }

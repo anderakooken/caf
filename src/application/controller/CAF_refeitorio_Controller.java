@@ -80,7 +80,7 @@ public class CAF_refeitorio_Controller {
 		//Se o cracha nao for de acordo com o calculo ou 
 		if(txtmatricula.getText().substring(0,txtmatricula.getLength()-2).length() != Integer.parseInt(txtmatricula.getText().substring(0,2)) 
 			|| txtmatricula == null || txtmatricula.getText().isEmpty()) {
-			Main.dialogBox("Leitura incorreta passe o crachá novamente.", 1);
+			Main.dialogBox("Leitura incorreta passe o crachï¿½ novamente.", 1);
 			return;
 		}
 		txtmatricula.setText(txtmatricula.getText().substring(2));
@@ -88,7 +88,7 @@ public class CAF_refeitorio_Controller {
 		//Matricula gerencial
 		if(txtmatricula.getText().equals("9000077")) {
 			matrc_real = txtmatricula.getText();
-			//labelacesso.setText("Matricula Inválida");
+			//labelacesso.setText("Matricula Invï¿½lida");
 			txtmatricula.setFocusTraversable(true);
 			txtnome.setText("ACESSO GERENCIAL");
 			status = "3";
@@ -102,7 +102,7 @@ public class CAF_refeitorio_Controller {
 		}
 		
 		if(dao.verifica(txtmatricula.getText()) == false){
-			Main.dialogBox("Matrícula não encontrada!", 1);
+			Main.dialogBox("MatrÃ­cula nï¿½o encontrada!", 1);
 			atualizar();
 			return;
 		}
@@ -158,7 +158,7 @@ public class CAF_refeitorio_Controller {
 			else {
 				//Se a pessoa nao almocou hoje, mas nao tem direito a refeicao
 				if(cont.equals("0")) {
-					txtultimo.setText("Sem Acesso Anterior - Sem Direito a Refeição");
+					txtultimo.setText("Sem Acesso Anterior - Sem Direito a RefeiÃ§Ã£o");
 				}else {
 					//Se a pessoa almocou hoje e nao tem mais direito de comer
 					l = dao.Registro(matricula, null);
@@ -181,7 +181,7 @@ public class CAF_refeitorio_Controller {
 
     
     @FXML void btnmovimento(ActionEvent event) {
-    	Main.modify.modify("view/CAF_refeitorio_relatorio.fxml", "Controle de Acesso - Relatório");
+    	Main.modify.modify("view/CAF_refeitorio_relatorio.fxml", "Controle de Acesso - RelatÃ³rio");
     }
     
     private void initTable() {

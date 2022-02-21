@@ -49,18 +49,18 @@ public class CAF_funcionarios_Controller {
 	    	if(txtmatricula.getText()==null || txtcracha.getText()==null || txtnome.getText()==null || cbfuncao.getValue()==null || cbsetor.getValue()==null ||
 	    		txtmatricula.getText().isEmpty() || txtcracha.getText().isEmpty() || txtnome.getText().isEmpty() || cbfuncao.getValue().getNome().isEmpty() 
 	    		|| cbsetor.getValue().getNome().isEmpty()) {
-	    		Main.dialogBox("Preencha todos os campos para cadastrar um funcion·rio!", 1);
+	    		Main.dialogBox("Preencha todos os campos para cadastrar um funcion√°rio!", 1);
 	    		return;
 	    	}
 	    	SetFun();
-	    	if(Main.ConfirmationDialog("VocÍ est· cadastrando um funcion·rio", "Tem certeza disso?").get() == ButtonType.OK) {
+	    	if(Main.ConfirmationDialog("Voc√™ est√° cadastrando um funcion√°rio", "Tem certeza disso?").get() == ButtonType.OK) {
 	    		List<Funcionario> l = dao.listFun("matricula ='"+txtmatricula.getText()+"'");
 	    		if(l.size()>0) {
 	    			txtnome.setText(l.get(0).get("nome"));
 	    			cbfuncao.selectionModelProperty().getValue().select(Main.selectCB(l.get(0).get("funcao"), cbfuncao));
 	    			cbsetor.selectionModelProperty().getValue().select(Main.selectCB(l.get(0).get("setor"), cbfuncao));
 	    			txtcracha.setText(l.get(0).get("idcartao"));
-	    			Main.dialogBox("N„o se pode cadastrar a mesma matricula!", 1);
+	    			Main.dialogBox("N√£o se pode cadastrar a mesma matricula!", 1);
 	    			return;
 	    		}
 	    		dao.adicionarfun(fun);

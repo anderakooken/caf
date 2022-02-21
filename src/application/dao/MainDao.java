@@ -41,6 +41,20 @@ public class MainDao {
 
 	}
 	
+	public void alterPw(String matricula, String pwnova) {
+		String sql = "UPDATE tb_usuarios SET login='"+pwnova+"' WHERE matricula='"+matricula+"'";
+		
+		try {
+			PreparedStatement ps = con.prepareStatement(sql);
+			ps.execute();
+			ps.close();
+			
+			Main.dialogBox("Senha alterada com sucesso!", 2);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	/*public List<Combobox> ListItems(String ID, String nome, String tabela){
 		List<Combobox> lista = new ArrayList<>();
 		String sql = "SELECT "+ID+" as id, "+nome+" as nome FROM "+tabela;

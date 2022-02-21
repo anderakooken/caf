@@ -1,12 +1,5 @@
 package application;
-import java.awt.Desktop;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Optional;
-
 import application.model.Combobox;
 import application.model.Usuario;
 import javafx.application.Application;
@@ -52,21 +45,21 @@ public class Main extends Application {
 			if(i==1) {
 					Alert alert = new Alert(AlertType.WARNING);
 					alert.setTitle("Warning Dialog");
-					alert.setHeaderText("Atenção");
+					alert.setHeaderText("AtenÃ§Ã£o!");
 					stage = (Stage) alert.getDialogPane().getScene().getWindow();
 					stage.getIcons().add(new Image(Main.class.getResourceAsStream("view/Icons/Atencao.png")));
 					alert.setContentText(text);
-					alert.show();
+					alert.showAndWait();
 					
 			} else if(i==2) {
 				Alert alert = new Alert(AlertType.INFORMATION);
 				
 				alert.setTitle("Information Dialog");
-				alert.setHeaderText("Atenção!");
+				alert.setHeaderText("AtenÃ§Ã£o!");
 				stage = (Stage) alert.getDialogPane().getScene().getWindow();
 				stage.getIcons().add(new Image(Main.class.getResourceAsStream("view/Icons/information.png")));
 				alert.setContentText(text);
-				alert.show();
+				alert.showAndWait();
 			}
 		}
 		//Funcao para o dialog confirmation.
@@ -86,7 +79,7 @@ public class Main extends Application {
 			
 		}
 		
-		public static void imprimir(String tipo) {
+	/*	public static void imprimir(String tipo) {
 			switch(tipo.toLowerCase()) {
 			case "relatorio hoje":
 				Desktop dk = Desktop.getDesktop();
@@ -112,7 +105,9 @@ public class Main extends Application {
 				}
 				
 			}
-		}
+		}*/
+		
+		
 		public static int selectCB(String item, ComboBox<Combobox> cb) {
 	    	int i = -1;
 	    	if(!(item == null || item.isEmpty())) {
@@ -125,4 +120,17 @@ public class Main extends Application {
 	    	}
 	    	return i;
 	    }
+		
+		public static void reiniciar() {
+			for(int i=0; i<ModifyScenes.listS.size(); i++) {
+				Stage s = ModifyScenes.listS.get(i);
+				s.close();
+				ModifyScenes.listS.remove(i);
+			}
+			ModifyScenes.close();
+			Main.Stagemain.close();
+			Main.user = new Usuario();
+			Platform.runLater(() -> new Main().start(new Stage()));
+			
+		}
 }
