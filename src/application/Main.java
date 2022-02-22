@@ -1,4 +1,8 @@
 package application;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Optional;
 import application.model.Combobox;
 import application.model.Usuario;
@@ -132,5 +136,44 @@ public class Main extends Application {
 			Main.user = new Usuario();
 			Platform.runLater(() -> new Main().start(new Stage()));
 			
+		}
+		
+		public static String getWeek(String date){ //ex 07/03/2017
+		    String dayWeek = "---";
+		    GregorianCalendar gc = new GregorianCalendar();
+		    try {
+		        gc.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(date));
+		        switch (gc.get(Calendar.DAY_OF_WEEK)) {
+		            case Calendar.SUNDAY:
+		                dayWeek = "DOM";
+		                break;
+		            case Calendar.MONDAY:
+		                dayWeek = "SEG";
+		                break;
+		            case Calendar.TUESDAY:
+		                dayWeek = "TER";
+		            break;
+		            case Calendar.WEDNESDAY:
+		                dayWeek = "QUA";
+		                break;
+		            case Calendar.THURSDAY:
+		                dayWeek = "QUI";
+		                break;
+		            case Calendar.FRIDAY:
+		                dayWeek = "SEX";
+		                break;
+		            case Calendar.SATURDAY:
+		                dayWeek = "SAB";
+
+		        }
+		    } catch (ParseException e) {
+		        e.printStackTrace();
+		    }
+		    return dayWeek;
+		}
+		public static String formatDatedb(String data) {
+			String newdate = "";
+			newdate = data.substring(8,10) + "/" + data.substring(5,7) + "/" + data.substring(0, 4);
+			return newdate;
 		}
 }

@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import util.MaskTextField;
 
 public class CAF_refeitorio_Controller {
 	
@@ -38,7 +39,7 @@ public class CAF_refeitorio_Controller {
     private @FXML TextField txtultimo;
     private @FXML TextField txtsetor;
     private @FXML TextField txtfuncao;
-	private @FXML TextField txtmatricula = new TextField();
+	private @FXML MaskTextField txtmatricula;
     
     
     private @FXML TableView<Funcionario> table;
@@ -74,6 +75,7 @@ public class CAF_refeitorio_Controller {
     		}
     	});
     	initTable();
+    	txtmatricula.setMask("N!");
     }
     
 	public @FXML void btnadicionar(ActionEvent event) {

@@ -60,20 +60,65 @@ public class RelatorioDao {
 					+ "GROUP BY r.idtipo, t.nmtipo\r\n"
 					+ "ORDER BY r.dtreg, r.idtipo;";
 			break;
+		case "movdiario":
+			sql = "SELECT r.dtreg, r.idtipo as id, t.nmtipo as nome, Count(r.idreg) AS qtd\r\n"
+					+ "FROM tb_status s \r\n"
+					+ "INNER JOIN tb_registros r ON s.idstatus = r.statusreg \r\n"
+					+ "INNER JOIN tb_tipos_refeicoes t ON r.idtipo = t.idtipo\r\n"
+					+ "WHERE r.statusreg=1 Or r.statusreg=3\r\n"
+					+ "GROUP BY r.dtreg, r.idtipo, t.nmtipo\r\n"
+					+ "HAVING r.dtreg Between '"+DataIni+"' And '"+DataFim+"';";
+			break;
+		case "faturamentoperiodo":
+			sql = "SELECT tb_tipos_refeicoes.indice, \r\n"
+					+ "tb_refeicoes_dia.dtlnc, tb_tipos_refeicoes.nmtipo, (If(q.qtdr is null, 0 ,q.qtdr)) AS qtdrd,\r\n"
+					+ "tb_tipos_refeicoes.vrunit, If(tb_refeicoes_dia.qtd is null,0,tb_refeicoes_dia.qtd) AS qtdm,\r\n"
+					+ "If(tb_refeicoes_dia.qtdq  is null,0,tb_refeicoes_dia.qtdq) AS qq, (If(tb_refeicoes_dia.qtd is null,0,If(q.qtdr is null,0,q.qtdr))-tb_refeicoes_dia.qtd) AS dif, \r\n"
+					+ " (If(tb_refeicoes_dia.qtd>If(q.qtdr is null,0,q.qtdr),tb_refeicoes_dia.qtd,(If(q.qtdr is null,0,q.qtdr))+If(tb_refeicoes_dia.qtdq is null,0,tb_refeicoes_dia.qtdq))) AS tlref, \r\n"
+					+ "If(If(tb_refeicoes_dia.qtd is null,0,tb_refeicoes_dia.qtd)>q.qtdr,(If(tb_refeicoes_dia.qtd is null,0,\r\n"
+					+ "tb_refeicoes_dia.qtd)+If(tb_refeicoes_dia.qtdq is null,0,tb_refeicoes_dia.qtdq))*tb_tipos_refeicoes.vrunit,\r\n"
+					+ "(If(q.qtdr is null,0,q.qtdr)+If(tb_refeicoes_dia.qtdq is null,0,tb_refeicoes_dia.qtdq))*tb_tipos_refeicoes.vrunit) AS total\r\n"
+					+ "FROM tb_tipos_refeicoes \r\n"
+					+ "INNER JOIN tb_refeicoes_dia LEFT JOIN \r\n"
+					+ "(SELECT tb_registros.idtipo, tb_registros.dtreg, Count(tb_registros.idreg) AS qtdr\r\n"
+					+ "FROM tb_registros\r\n"
+					+ "WHERE tb_registros.statusreg=1 Or tb_registros.statusreg=3\r\n"
+					+ "GROUP BY tb_registros.idtipo, tb_registros.dtreg) q\r\n"
+					+ "ON tb_refeicoes_dia.dtlnc = q.dtreg AND tb_refeicoes_dia.idtipo = q.idtipo ON tb_tipos_refeicoes.idtipo = tb_refeicoes_dia.idtipo\r\n"
+					+ "WHERE tb_refeicoes_dia.dtlnc Between '"+DataIni+"' And '"+DataFim+"'\r\n"
+					+ "ORDER BY tb_tipos_refeicoes.indice,tb_tipos_refeicoes.nmtipo, tb_refeicoes_dia.dtlnc;";
+			break;
 		}
 		
 		try {
 			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();
+			if(!(tipo.toLowerCase().equals("faturamentoperiodo"))) {
+				while(rs.next()) {
+						Registro reg = new Registro();
+						if(tipo.toLowerCase().equals("reldia") || tipo.toLowerCase().equals("movdiario") ) {
+							reg.set("datareg", rs.getString("dtreg"));
+						}
+						reg.set("idtipo", rs.getString("id"));
+						reg.set("tipo", rs.getString("nome"));
+						reg.set("quantidade", rs.getString("qtd"));
+						l.add(reg);
+				}
+			}else {
 				while(rs.next()) {
 					Registro reg = new Registro();
-					if(tipo.toLowerCase().equals("reldia")) {
-						reg.set("datareg", rs.getString("dtreg"));
-					}
-					reg.set("idtipo", rs.getString("id"));
-					reg.set("tipo", rs.getString("nome"));
-					reg.set("quantidade", rs.getString("qtd"));
+					reg.set("idtipo", rs.getString("indice"));
+					reg.set("datareg", rs.getString("dtlnc"));
+					reg.set("tipo", "nmtipo");
+					reg.set("qtdr", rs.getString("qtdrd"));
+					reg.set("qtdm", rs.getString("qtdm"));
+					reg.set("qq", rs.getString("qq"));
+					reg.set("vrunit", rs.getString("vrunit"));
+					reg.set("diferenca", rs.getString("dif"));
+					reg.set("totalref", rs.getString("tlref"));
+					reg.set("total", rs.getString("total"));
 					l.add(reg);
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

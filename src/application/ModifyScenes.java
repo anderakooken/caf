@@ -33,11 +33,12 @@ public class ModifyScenes {
 					Scene nwscene = new Scene(root);
 					stage.setScene(nwscene);
 					stage.setResizable(false);
+					Stage stageatual = stage;
 					stage.getIcons().add(new Image(ModifyScenes.class.getResourceAsStream("view/Icons/CAF.png")));
 					nwscene.setOnKeyPressed(e ->{
 						if(e.getCode() == KeyCode.ESCAPE) {
 							close();
-							stage.close();
+							stageatual.close();
 						}
 					});
 					

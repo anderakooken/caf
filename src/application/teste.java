@@ -10,9 +10,7 @@ public class teste {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		AdicionaisDao dao = new AdicionaisDao();
-		List<Funcionario> flist = new ArrayList<>();
-		System.out.println(flist.size());
+		ArquivoTxt.writeRelNutrinor("faturamento mensal", "2021-02-01", "2022-02-01");
 	}
 
 }

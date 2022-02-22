@@ -41,22 +41,17 @@ public class CAF_relatorio_Controller {
 	    		break;
 	    	case 4:
 	    		ArquivoTxt.writeRelNutrinor("periodo", dataini.getValue().toString(), datafim.getValue().toString());
+	    		break;
+	    	case 3:
+	    		ArquivoTxt.writeRelNutrinor("movdiario", dataini.getValue().toString(), datafim.getValue().toString());
+	    		break;
+	    	case 1:
+	    		ArquivoTxt.writeRelNutrinor("faturamento mensal", dataini.getValue().toString(), datafim.getValue().toString());
+	    		break;
 	    	}
+	    	
+	    		
     	}
-    }
-    private @FXML void change() {
-    	if(cbrelatorio.getValue().getId() == 1) {
-    		
-    	} else if(cbrelatorio.getValue().getId() == 2) {
-    		
-    	} else if(cbrelatorio.getValue().getId() == 3) {
-    		
-    	} else if(cbrelatorio.getValue().getId() == 4) {
-    		
-    	} else if(cbrelatorio.getValue().getId() == 5) {
-    		
-    	}
-    	
     }
     
     private void carregarItems() {

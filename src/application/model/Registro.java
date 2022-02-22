@@ -1,7 +1,7 @@
 package application.model;
 
 public class Registro {
-	private String idreg, matricula, nome, dtreg, hrreg, iduser, statusreg, nmstatus, reg_empregado, idnegado, idtipo,nmtipo, vrunit, count;
+	private String idreg, matricula, nome, dtreg, hrreg, iduser, statusreg, nmstatus, reg_empregado, idnegado, idtipo,nmtipo, vrunit, count, qtdr, qq, dif,tlref,qtdm,total;
 	
 	public String get(String variavel) {
 		String rtn = "";
@@ -48,6 +48,25 @@ public class Registro {
 				break;
 			case "vrunit":
 				rtn = vrunit;
+				break;
+				//Variaveis para o faturamento mensal
+			case "qtdr":
+				rtn = qtdr;
+				break;
+			case "qtdm":
+				rtn = qtdm;
+				break;
+			case "qq":
+				rtn = qq;
+				break;
+			case "diferenca":
+				rtn = dif;
+				break;
+			case "totalref":
+				rtn = tlref;
+				break;
+			case "total":
+				rtn = total;
 				break;
 			}
 		}
@@ -103,7 +122,33 @@ public class Registro {
 			case "vrunit":
 				vrunit = valor;
 				break;
+				//Variaveis para o faturamento mensal
+			case "qtdr":
+				qtdr = valor;
+				break;
+			case "qtdm":
+				qtdm = valor;
+				break;
+			case "qq":
+				qq = valor;
+				break;
+			case "diferenca":
+				dif = valor;
+				break;
+			case "totalref":
+				 tlref = valor;
+				break;
+			case "total":
+				total = valor;
+				break;
 			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Registro [dtreg=" + dtreg + ", idtipo=" + idtipo + ", nmtipo=" + nmtipo + ", vrunit=" + vrunit
+				+ ", count=" + count + ", qtdr=" + qtdr + ", qq=" + qq + ", dif=" + dif + ", tlref=" + tlref + ", qtdm="
+				+ qtdm + ", total=" + total + "]";
 	}
 }

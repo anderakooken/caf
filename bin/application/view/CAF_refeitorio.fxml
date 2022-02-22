@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import util.*?>
 
 <Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CAF_refeitorio_Controller">
    <children>
@@ -30,10 +31,10 @@
           <RowConstraints maxHeight="45.0" minHeight="45.0" prefHeight="45.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <TextField fx:id="txtmatricula" GridPane.rowIndex="1">
+            <MaskTextField fx:id="txtmatricula" GridPane.rowIndex="1">
                <font>
                   <Font size="15.0" />
-               </font></TextField>
+               </font></MaskTextField>
             <Label text="Matricula">
                <font>
                   <Font size="15.0" />
