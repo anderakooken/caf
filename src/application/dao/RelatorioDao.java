@@ -61,16 +61,15 @@ public class RelatorioDao {
 					+ "ORDER BY r.dtreg, r.idtipo;";
 			break;
 		case "movdiario":
-			sql = "SELECT r.dtreg, r.idtipo as id, t.nmtipo as nome, Count(r.idreg) AS qtd\r\n"
-					+ "FROM tb_status s \r\n"
-					+ "INNER JOIN tb_registros r ON s.idstatus = r.statusreg \r\n"
-					+ "INNER JOIN tb_tipos_refeicoes t ON r.idtipo = t.idtipo\r\n"
-					+ "WHERE r.statusreg=1 Or r.statusreg=3\r\n"
-					+ "GROUP BY r.dtreg, r.idtipo, t.nmtipo\r\n"
-					+ "HAVING r.dtreg Between '"+DataIni+"' And '"+DataFim+"';";
+			sql = "SELECT r.dtreg, t.idtipo as id, CONCAT(t.idtipo,' - ', t.nmtipo) AS nome, "
+					+ "COUNT(r.idreg) as qtd, s.nmstatus FROM tb_registros r\r\n"
+					+ "LEFT JOIN tb_tipos_refeicoes t ON r.idtipo = t.idtipo \r\n"
+					+ "LEFT JOIN tb_status s ON r.statusreg = s.idstatus \r\n"
+					+ "where (r.dtreg between '"+DataIni+"'  AND '"+DataFim+"') AND (r.statusreg = 1 OR r.statusreg = 3)\r\n"
+					+ "GROUP BY r.dtreg, nome";
 			break;
 		case "faturamentoperiodo":
-			sql = "SELECT tb_tipos_refeicoes.indice, \r\n"
+			sql = "SELECT tb_tipos_refeicoes.indice, CONCAT(tb_tipos_refeicoes.indice,' - ', tb_tipos_refeicoes.nmtipo) as nome, \r\n"
 					+ "tb_refeicoes_dia.dtlnc, tb_tipos_refeicoes.nmtipo, (If(q.qtdr is null, 0 ,q.qtdr)) AS qtdrd,\r\n"
 					+ "tb_tipos_refeicoes.vrunit, If(tb_refeicoes_dia.qtd is null,0,tb_refeicoes_dia.qtd) AS qtdm,\r\n"
 					+ "If(tb_refeicoes_dia.qtdq  is null,0,tb_refeicoes_dia.qtdq) AS qq, (If(tb_refeicoes_dia.qtd is null,0,If(q.qtdr is null,0,q.qtdr))-tb_refeicoes_dia.qtd) AS dif, \r\n"
@@ -109,7 +108,7 @@ public class RelatorioDao {
 					Registro reg = new Registro();
 					reg.set("idtipo", rs.getString("indice"));
 					reg.set("datareg", rs.getString("dtlnc"));
-					reg.set("tipo", "nmtipo");
+					reg.set("tipo", rs.getString("nome"));
 					reg.set("qtdr", rs.getString("qtdrd"));
 					reg.set("qtdm", rs.getString("qtdm"));
 					reg.set("qq", rs.getString("qq"));

@@ -10,7 +10,7 @@ public class teste {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		ArquivoTxt.writeRelNutrinor("faturamento mensal", "2021-02-01", "2022-02-01");
+		ArquivoTxt.writeRelNutrinor("movdiario", "2021-01-01", "2022-02-01");
 	}
 
 }
