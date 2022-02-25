@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CAF_login_eventos_Controller">
+   <children>
+      <GridPane layoutX="15.0" layoutY="5.0" prefHeight="54.0" prefWidth="671.0">
+        <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="125.0" minWidth="10.0" prefWidth="125.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="txtid" GridPane.rowIndex="1" />
+            <TextField fx:id="txtevento" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="txtvrunit" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+            <TextField fx:id="txtinicio" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+            <TextField fx:id="txtfim" GridPane.columnIndex="8" GridPane.rowIndex="1" />
+            <Label text="ID" />
+            <Label text="Evento" GridPane.columnIndex="2" />
+            <Label text="VR Unitário" GridPane.columnIndex="4" />
+            <Label text="Hora inicial" GridPane.columnIndex="6" />
+            <Label text="Hora final" GridPane.columnIndex="8" />
+         </children>
+      </GridPane>
+      <GridPane layoutX="459.0" layoutY="81.0" prefHeight="30.0" prefWidth="227.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" onAction="#Adicionar" prefHeight="25.0" prefWidth="158.0" text="Adicionar" />
+            <Button mnemonicParsing="false" onAction="#Deletar" prefHeight="25.0" prefWidth="219.0" text="Exluir" GridPane.columnIndex="1" />
+         </children>
+      </GridPane>
+      <TableView fx:id="table" layoutX="15.0" layoutY="126.0" prefHeight="363.0" prefWidth="671.0" onMouseClicked="#tableClick">
+        <columns>
+          <TableColumn fx:id="cid" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="cevento" prefWidth="222.0" text="EVENTO" />
+            <TableColumn fx:id="cvrunit" prefWidth="140.0" text="VR UNITÁRIO" />
+            <TableColumn fx:id="chrini" prefWidth="110.0" text="HORA INICIO" />
+            <TableColumn fx:id="chrfim" prefWidth="111.0" text="HORA FIM" />
+        </columns>
+      </TableView>
+   </children>
+</Pane>

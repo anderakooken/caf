@@ -1,9 +1,20 @@
 package application;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Optional;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import application.model.Combobox;
 import application.model.Usuario;
 import javafx.application.Application;
@@ -23,6 +34,7 @@ public class Main extends Application {
 	public static Stage Stagemain;
 	public static ModifyScenes modify = new ModifyScenes();
 	public static Usuario user = new Usuario();
+	private static HttpURLConnection connection;
 	public void start(Stage primaryStage) {
 		try {
 			Stagemain = primaryStage;
@@ -176,4 +188,64 @@ public class Main extends Application {
 			newdate = data.substring(8,10) + "/" + data.substring(5,7) + "/" + data.substring(0, 4);
 			return newdate;
 		}
+		
+		public static Boolean verifyJSON(String login, String password) {
+			BufferedReader reader;
+			String line;
+			StringBuffer responseContent = new StringBuffer();
+			//Codificando login e senha para o formato url
+			login = URLEncoder.encode(login, StandardCharsets.UTF_8);
+			password = URLEncoder.encode(password, StandardCharsets.UTF_8);
+			
+				try {
+					//Estabelecendo conexão
+					URL url = new URL("http://192.168.254.216/auth.php?auth&login="+login+"&passwd="+password+"");
+					connection = (HttpURLConnection) url.openConnection();
+					
+					connection.setRequestMethod("GET");
+					connection.setConnectTimeout(5000);
+					connection.setReadTimeout(5000);
+					
+					int status = connection.getResponseCode();
+					if(status==500) {
+						dialogBox("Usuário não existe ou está desabilitado!",1);
+						return false;
+					}
+					if(status==200) {
+						reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+						//Passando o corpo JSON
+						while((line=reader.readLine())!=null) {
+							responseContent.append(line);
+						}
+						reader.close();
+					}
+					//Verificando o JSON
+					String responsebody = responseContent.toString();
+					if(responsebody.isEmpty() || responsebody == null) {
+						dialogBox("Nome de Usuário ou Senha incorreto!",1);
+						return false;
+					}
+					//Pegando o json array, passando pra objeto e depois passando novamente para array.
+					JSONArray jsonarray = new JSONArray(responsebody);
+					JSONObject jsonobjeto = jsonarray.getJSONObject(0);
+					JSONArray grupos = jsonobjeto.getJSONArray("grupos");
+					//Verificando se tem acesso ao CAF
+					for(int i = 0; i<grupos.length(); i++) {
+						if(grupos.get(i).equals("CAF")) {
+							return true;
+						}
+					}
+				
+					dialogBox("Você não tem permissão para acessar esse programa!",1);
+					return false;
+				
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}finally{
+					connection.disconnect();
+				}
+				return false;
+		}
+		
 }

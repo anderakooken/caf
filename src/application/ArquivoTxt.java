@@ -84,16 +84,19 @@ public class ArquivoTxt {
 					reg = registro.get(i);
 					reg = tratamentodelinhas(reg,"extrato");
 					if(datar.isEmpty() || !(datar.equals(reg.get("datareg")))) {
+						if(!(datar.isEmpty()) && datar.equals(reg.get("datareg"))) {
+							p.println("\n                       total="+total);
+						}
 						p.println("\n*******************************"
 								+ "\n\nData:     " + reg.get("datareg")
 								+ "\n\n     Refeição          Qtd"
 								+ "\n     _____________________");
 					}
 					p.println("\n     "+reg.get("idtipo")+"  -  "+reg.get("tipo")+"  ("+reg.get("quantidade")+")");
-					total = Integer.parseInt(reg.get("quantidade"));
+					total = total + Integer.parseInt(reg.get("quantidade"));
 					datar = reg.get("datareg");
 				}
-				p.println("\n     total="+total);
+				p.println("\n*******************************");
 			}else if(tprelatorio.equals("periodo")) {
 				p.println("  ***CONTROLE DE ACESSO***\r\n"
 						+ "*******************************\r\n"
@@ -108,19 +111,19 @@ public class ArquivoTxt {
 					reg = registro.get(i);
 					reg = tratamentodelinhas(reg,"extrato");
 					p.println("\n     "+reg.get("idtipo")+"  -  "+reg.get("tipo")+"  ("+reg.get("quantidade")+")");
-					total = Integer.parseInt(reg.get("quantidade"));
+					total = total + Integer.parseInt(reg.get("quantidade"));
 					datar = reg.get("datareg");
 				}
-				p.println("\n*******************************"
-						+"\n total=" + total);
+				p.println("\n             total=" + total);
+				p.println("\n*******************************");
 			} else if(tprelatorio.toLowerCase().equals("faturamento mensal")) {
-				p.println("  					 ***CONTROLE DE ACESSO***\r\n"
-						+ "******************************************************************************************\r\n"
-						+ "     					   FATURA MENSAL\r\n"
+				p.println("                               ***CONTROLE DE ACESSO***\r\n"
+						+ "********************************************************************************\r\n"
+						+ "                                  FATURAMENTO MENSAL\r\n"
 						+ "     \r\n"
-						+ "\r\n"
-						+ "Refeição  |   Data|Consumido|ConsumoMin|Diferença|Quentinhas|Total ref. |Vr Unitário | Valor Total\r\n"
-						+ "__________________________________________________________________________________________________________\r\n");
+						+ "Refeição\r\n"
+						+ "Data|Consumido|ConsumoMin|Diferença|Quentinhas|Totalref.|Vr Unitário|Valor Total\r\n");
+						   
 				String indice = "";
 				for(int i = 0; i<registro.size(); i++) {
 					reg = new Registro();
@@ -128,31 +131,34 @@ public class ArquivoTxt {
 					reg = tratamentodelinhas(reg,"faturamentomensal");
 					if(indice.equals(reg.get("idtipo")) == false) {
 						
-							p.println("__________________________________________________________________________________________________________\r\n"
+							p.println("________________________________________________________________________________\r\n\n"
 									 +"   "+reg.get("tipo")+" \r\n"
-									 +"__________________________________________________________________________________________________________\r\n");
+									 +"________________________________________________________________________________\r\n");
 					}
-					
-					p.println(""+Main.getWeek(reg.get("datareg"))+" | "+Main.formatDatedb(reg.get("datareg"))+" | " + reg.get("qtdr") + " | " + 
-					reg.get("qtdm")+" | "+reg.get("diferenca").substring(reg.get("diferenca").indexOf("-"))+ " | " + reg.get("qq") + " | " + reg.get("totalref")+" | " + reg.get("vrunit").replace(".",",")+"|   R$"+reg.get("total") +"\r\n");
+					           
+					p.println("        "+Main.getWeek(reg.get("datareg"))+" - "+Main.formatDatedb(reg.get("datareg"))+" | " + reg.get("qtdr") + " | " + 
+					reg.get("qtdm")+" | "+reg.get("diferenca").substring(reg.get("diferenca").indexOf("-"))+ " | " + reg.get("qq") + " | " + reg.get("totalref")+" | " + reg.get("vrunit").replace(".",",")+"| R$"+reg.get("total") +"\r\n");
 					indice = reg.get("idtipo");
 				}
 			}  else if(tprelatorio.toLowerCase().equals("movdiario")) {
 				String indice = "";
-				p.println("  					 ***CONTROLE DE ACESSO***\r\n"
-						+ "*************************************************************************************\r\n"
-						+ "     					   FATURA MENSAL\r\n"
-						+ "Data do movimento: "+data+"\r\n"
-						+ "\r\n"
-						+ "               Refeição                                             Quantidade\r\n"
-						+ "               ____________________________________________________________________\r\n");
+				p.println("*******************************************************************************\r\n"
+						+ "                                 MOVIMENTO DIÁRIO\r\n");
+						
 				for(int i = 0; i<registro.size(); i++) {
 					reg = new Registro();
 					reg = registro.get(i);
-					reg = tratamentodelinhas(reg,"extrato");
-					if(indice.equals(reg.get("datareg")) == false) {
-						p.println("        "+reg.get("datareg")+" - "+reg.get("tipo")+"                                             "+reg.get("quantidade")+"\r\n");
+					reg = tratamentodelinhas(reg,"movdiario");
+					if(indice.equals(reg.get("datareg")) == false){
+						if(indice.equals(reg.get("datareg")) == false && !(indice.isEmpty())) {
+							p.println("________________________________________________________________________________\r\n");
+						}
+						p.println("Data do movimento: "+data+"\r\n"
+								+ "\r\n"
+								+ "           Refeição                                             Quantidade\r\n"
+								+ "           ________________________________________________________________\r\n");
 					}
+						p.println("           "+reg.get("tipo")+"                                             "+reg.get("quantidade")+"\r\n");
 					
 					indice = reg.get("datareg");
 				}
@@ -201,6 +207,10 @@ public class ArquivoTxt {
 			}
 		}else if(tipo.equals("extrato")) {
 			while(reg.get("tipo").length()<8) {
+				reg.set("tipo", reg.get("tipo")+" ");
+			}
+		}else if(tipo.equals("movdiario")) {
+			while(reg.get("tipo").length()<12) {
 				reg.set("tipo", reg.get("tipo")+" ");
 			}
 		}

@@ -22,8 +22,8 @@
                   <Menu id="menulogin" mnemonicParsing="false" text="Login">
                      <items>
                         <MenuItem mnemonicParsing="false" text="Alterar Senha" onAction="#openalterpw" />
-                        <MenuItem mnemonicParsing="false" text="Eventos" visible="false" />
-                        <MenuItem mnemonicParsing="false" text="Refeições Dia" visible="false" />
+                        <MenuItem mnemonicParsing="false" text="Eventos" onAction="#opencadeventos" />
+                        <MenuItem mnemonicParsing="false" text="Refeições Dia" onAction="#openminrefperiodo" disable="true" />
                         <MenuItem mnemonicParsing="false" text="Exportar" visible="false"  />
                         <MenuItem mnemonicParsing="false" onAction="#Logout" text="Logout" />
                      </items>

@@ -1,5 +1,4 @@
 package application.controller;
-
 import application.Main;
 import application.ModifyScenes;
 import application.dao.MainDao;
@@ -29,25 +28,21 @@ public class CAF_inicio_Controller {
     String msg_a = "Você não tem permissão de acesso.";
     
     @FXML void initialize() {
-    	txtuser.setText("andre.cavalcante");;
-    	txtpw.setText("truco");
     }
     
     @FXML void btnlogar(ActionEvent event) {
-    	if (
-    			txtuser.getText().isEmpty() || 
-    			txtpw.getText().isEmpty()
-    		) {
-    	
-    			Main.dialogBox("Digite um Usuário e Senha!", 1);
-
+    	if (txtuser.getText().isEmpty() || 
+    		txtpw.getText().isEmpty()) {
+    		Main.dialogBox("Digite um Usuário e Senha!", 1);
     		} else {
     			
+    			//Consulta JSON
+    			if((Main.verifyJSON(txtuser.getText(), txtpw.getText())) == false) {
+    				return;
+    			};
+    			
     			//verifica��o na funcaoo do banco de dados
-    			if (dao.UserConfirm(
-    					txtuser.getText(), 
-    					txtpw.getText())
-    			) {
+    			if (dao.UserConfirm(txtuser.getText())) {
     			
     				//Caso login esteja ok, ajusta o frame para modo logado
     				panelogin.setVisible(false);
@@ -57,7 +52,7 @@ public class CAF_inicio_Controller {
     				txtuser.setText("");
     				txtpw.setText("");
     			} else {
-    				Main.dialogBox("Nome de Usuário ou Senha incorreto!", 1);
+    				Main.dialogBox("Usuário não existe no banco de dados!", 1);
     			}
     		}
     }
@@ -105,10 +100,28 @@ public class CAF_inicio_Controller {
 			Main.dialogBox(msg_a, 1);
 		}
     }
-    
+    //-----------------login menu---------------------
     @FXML void openalterpw(ActionEvent event) {
     	if(Main.user.getNvacesso() <= 1) {
     		Main.modify.modify("view/CAF_login_alterpw.fxml", "CAF - Alterar Senha");
+    		
+    		stage.setOnCloseRequest(e -> e.consume());
+    	} else {
+			Main.dialogBox(msg_a, 1);
+		}
+    }
+    @FXML void opencadeventos(ActionEvent event) {
+    	if(Main.user.getNvacesso() <= 1) {
+    		Main.modify.modify("view/CAF_login_eventos.fxml", "CAF - Eventos");
+    		
+    		stage.setOnCloseRequest(e -> e.consume());
+    	} else {
+			Main.dialogBox(msg_a, 1);
+		}
+    }
+    @FXML void openminrefperiodo(ActionEvent event) {
+    	if(Main.user.getNvacesso() <= 1) {
+    		Main.modify.modify("view/CAF_login_refeicoesperiodo.fxml", "CAF - Eventos");
     		
     		stage.setOnCloseRequest(e -> e.consume());
     	} else {

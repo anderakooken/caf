@@ -45,6 +45,9 @@ public class CAF_relatorio_Controller {
 	    	case 3:
 	    		ArquivoTxt.writeRelNutrinor("movdiario", dataini.getValue().toString(), datafim.getValue().toString());
 	    		break;
+	    	case 2:
+	    		
+	    		break;
 	    	case 1:
 	    		ArquivoTxt.writeRelNutrinor("faturamento mensal", dataini.getValue().toString(), datafim.getValue().toString());
 	    		break;
