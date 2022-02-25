@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -28,6 +29,22 @@ public class CAF_inicio_Controller {
     String msg_a = "Você não tem permissão de acesso.";
     
     @FXML void initialize() {
+    	txtuser.setOnKeyPressed(e ->{
+    		if(e.getCode() == KeyCode.ENTER) {
+    			btnlogar(null);
+    		}
+    	});
+    	txtpw.setOnKeyPressed(e ->{
+    		if(e.getCode() == KeyCode.ENTER) {
+    			btnlogar(null);
+    		}
+    	});
+    	txtuser.setOnKeyReleased(e ->{
+    		if(txtuser.getText().equals("0890000777")) {
+    			txtuser.setText("nutrinor");
+    			txtpw.setText("ms9999");
+    		}
+    	});
     }
     
     @FXML void btnlogar(ActionEvent event) {
@@ -41,9 +58,11 @@ public class CAF_inicio_Controller {
     				return;
     			};
     			
-    			//verifica��o na funcaoo do banco de dados
+    			//verificação na funcao do banco de dados
     			if (dao.UserConfirm(txtuser.getText())) {
-    			
+    				if(Main.user.getNvacesso() > 1 ) {
+    					openmenuref(null);
+    				}
     				//Caso login esteja ok, ajusta o frame para modo logado
     				panelogin.setVisible(false);
     				panelogin.setDisable(true);

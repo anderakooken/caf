@@ -84,6 +84,7 @@ public class EventoDao {
 	public List<Evento> listHis(String where) {
 		List<Evento> l = new ArrayList<>();
 		if(where == null) {
+			System.out.println("erro where");
 			where = "";
 		}
 		String sql = "SELECT tb_refeicoes_dia.idlnc, tb_refeicoes_dia.dtlnc, \r\n"

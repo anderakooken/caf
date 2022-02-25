@@ -44,42 +44,42 @@ public class CAF_login_refperiodo_Controller {
     	int i = 0;
     	if(cbeventos.getValue() != null) {
     		if(i==0) {
-    			where = ". ";
+    			where += ". ";
     			i++;
     		}else {
-    			where = ", ";
+    			where += ", ";
     		}
-    		where = "nmtipo='"+cbeventos.getValue().getNome()+"' ";
+    		where += " nmtipo='"+cbeventos.getValue().getNome()+"' ";
     	}
 		if(dtini.getValue() !=null && dtfim.getValue() !=null) {
 			if(i==0) {
-    			where = ". ";
+    			where += ". ";
     			i++;
     		}else {
-    			where = ", ";
+    			where += ", ";
     		}
 			where += " (dtlnc BETWEEN '"+dtini.getValue().toString()+"' AND '"+dtfim.getValue().toString()+"') ";
 			
 		}
-		if(qtdmin != null || !(qtdmin.getText().isEmpty())) {
+		if(qtdmin != null && !(qtdmin.getText().isEmpty())) {
 			if(i==0) {
-    			where = ". ";
+    			where += ". ";
     			i++;
     		}else {
-    			where = ", ";
+    			where += ", ";
     		}
-			where += " qtdm = '"+qtdmin.getText()+"' ";
+			where += " qtd = '"+qtdmin.getText()+"' ";
 		}
-		if(quentinha != null || !(quentinha.getText().isEmpty())){
+		if(quentinha != null && !(quentinha.getText().isEmpty())){
 			if(i==0) {
-    			where = ". ";
+    			where += ". ";
     			i++;
     		}else {
-    			where = ", ";
+    			where += ", ";
     		}
 			where +=" qtdq = '"+quentinha.getText()+"' ";
 		}
-		initTable(where.replace(",", "WHERE").replaceAll(",", "AND"));	
+		initTable(where.replace(".", "WHERE").replaceAll(",", "AND"));	
     }
     
     private void CarregarItems() {
@@ -94,6 +94,15 @@ public class CAF_login_refperiodo_Controller {
     	cevento.setCellValueFactory(new PropertyValueFactory<>("nome"));
     	
     	table.setItems(FXCollections.observableArrayList(dao.listHis(where)));
+    }
+    
+    private @FXML void limpar() {
+    	cbeventos.setValue(null);
+    	quentinha.setText("");
+    	qtdmin.setText("");
+    	dtini.setValue(null);
+    	dtfim.setValue(null);
+    	
     }
     
 }

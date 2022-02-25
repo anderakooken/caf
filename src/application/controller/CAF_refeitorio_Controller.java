@@ -74,6 +74,7 @@ public class CAF_refeitorio_Controller {
     			btnadicionar(null);
     		}
     	});
+    	
     	initTable();
     	txtmatricula.setMask("N!");
     }
@@ -82,7 +83,8 @@ public class CAF_refeitorio_Controller {
 		//Se o cracha nao for de acordo com o calculo ou 
 		if(txtmatricula.getText().substring(0,txtmatricula.getLength()-2).length() != Integer.parseInt(txtmatricula.getText().substring(0,2)) 
 			|| txtmatricula == null || txtmatricula.getText().isEmpty()) {
-			Main.dialogBox("Leitura incorreta passe o crach� novamente.", 1);
+			txtmatricula.setText(null);
+			Main.dialogBox("Leitura incorreta passe o crachá novamente.", 1);
 			return;
 		}
 		txtmatricula.setText(txtmatricula.getText().substring(2));
@@ -90,6 +92,7 @@ public class CAF_refeitorio_Controller {
 		//Matricula gerencial
 		if(txtmatricula.getText().equals("9000077")) {
 			matrc_real = txtmatricula.getText();
+			txtmatricula.setText(null);
 			//labelacesso.setText("Matricula Inv�lida");
 			txtmatricula.setFocusTraversable(true);
 			txtnome.setText("ACESSO GERENCIAL");
@@ -99,12 +102,12 @@ public class CAF_refeitorio_Controller {
 			setRegistro();
 			dao.CREG(reg);
 			atualizar();
-			txtmatricula.setText(null);
 			return;
 		}
 		
 		if(dao.verifica(txtmatricula.getText()) == false){
-			Main.dialogBox("Matrícula n�o encontrada!", 1);
+			Main.dialogBox("Matrícula não encontrada!", 1);
+			txtmatricula.setText(null);
 			atualizar();
 			return;
 		}
@@ -112,6 +115,7 @@ public class CAF_refeitorio_Controller {
 		//Setando os dados pegos pelo banco de dados
 		funcionario = new Funcionario();
 		List<Funcionario> l = dao.Registro(txtmatricula.getText(), "funcionarios");
+		txtmatricula.setText(null);
 		if(l.size() != -1) {
 			funcionario = l.get(0);
 			txtnome.setText(funcionario.get("nome"));
@@ -155,7 +159,7 @@ public class CAF_refeitorio_Controller {
 				setRegistro();
 				dao.CREG(reg);
 				atualizar();
-				ArquivoTxt.writeComprovante("Aprovado", txtmatricula.getText(), txtultimo.getText());
+				ArquivoTxt.writeComprovante("Aprovado", matricula, txtultimo.getText());
 			}
 			else {
 				//Se a pessoa nao almocou hoje, mas nao tem direito a refeicao
@@ -175,7 +179,6 @@ public class CAF_refeitorio_Controller {
 					
 				}
 			}
-			txtmatricula.setText(null);
 			txtmatricula.setFocusTraversable(true);
 			
 		}	
