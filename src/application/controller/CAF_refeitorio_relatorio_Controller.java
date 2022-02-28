@@ -48,7 +48,7 @@ public class CAF_refeitorio_relatorio_Controller {
     			Main.dialogBox("As datas não podem ser vazias", 1);
     			return;
     		}
-    		ArquivoTxt.writeRelNutrinor("periodo", dpini.getValue().toString(), dpfim.getValue().toString());
+    		ArquivoTxt.writeRel("periodo", dpini.getValue().toString(), dpfim.getValue().toString());
     	}
     	else if(cbrelatorio.getValue().getId() == 2) {
     		if(dpfim.getValue() == null) {
@@ -58,7 +58,7 @@ public class CAF_refeitorio_relatorio_Controller {
     			Main.dialogBox("A data não pode ser vazia!", 1);
     			return;
     		}
-    		ArquivoTxt.writeRelNutrinor("dia", dpini.getValue().toString(), dpfim.getValue().toString());
+    		ArquivoTxt.writeRel("dia", dpini.getValue().toString(), dpfim.getValue().toString());
     		//excel.CriareImprimirRelatorioNutrionor("Relat�rio do Dia "+dateuni.getValue(), null, null, null, null);
     	}
     }

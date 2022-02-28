@@ -17,7 +17,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import util.MaskTextField;
 
 public class CAF_refeitorio_Controller {
 	
@@ -39,7 +38,7 @@ public class CAF_refeitorio_Controller {
     private @FXML TextField txtultimo;
     private @FXML TextField txtsetor;
     private @FXML TextField txtfuncao;
-	private @FXML MaskTextField txtmatricula;
+	private @FXML TextField txtmatricula;
     
     
     private @FXML TableView<Funcionario> table;
@@ -60,7 +59,7 @@ public class CAF_refeitorio_Controller {
  	private String status;
  	private String matrc_real;
  	private String cor = "-fx-background-color: ";
- 	
+ 	 /*---------------------Vars--------------------*/
     private @FXML void initialize() {
    
 		
@@ -73,17 +72,25 @@ public class CAF_refeitorio_Controller {
     		if(e.getCode() == KeyCode.ENTER && !(txtmatricula.getText().isEmpty())) {
     			btnadicionar(null);
     		}
+    		if(e.getCode() == KeyCode.TAB && !(txtmatricula.getText().isEmpty())) {
+    			btnadicionar(null);
+    		}
     	});
     	
     	initTable();
-    	txtmatricula.setMask("N!");
     }
     
 	public @FXML void btnadicionar(ActionEvent event) {
 		//Se o cracha nao for de acordo com o calculo ou 
-		if(txtmatricula.getText().substring(0,txtmatricula.getLength()-2).length() != Integer.parseInt(txtmatricula.getText().substring(0,2)) 
-			|| txtmatricula == null || txtmatricula.getText().isEmpty()) {
+		if(txtmatricula == null) {		
+			return;
+		}
+		if(txtmatricula.getText().isEmpty() || txtmatricula.getText().length()<2 || Integer.parseInt(txtmatricula.getText())-2<=0) {
 			txtmatricula.setText(null);
+			Main.dialogBox("Leitura incorreta passe o crachá novamente.", 1);
+			return;
+		}
+		if(txtmatricula.getText().substring(0,txtmatricula.getLength()-2).length() != Integer.parseInt(txtmatricula.getText().substring(0,2))) {
 			Main.dialogBox("Leitura incorreta passe o crachá novamente.", 1);
 			return;
 		}
@@ -181,7 +188,10 @@ public class CAF_refeitorio_Controller {
 			}
 			txtmatricula.setFocusTraversable(true);
 			
-		}	
+		}else {
+			Main.dialogBox("Matricula sem registro no banco de dados!", 1);
+			txtmatricula.setText(null);
+		}
     }
 
     

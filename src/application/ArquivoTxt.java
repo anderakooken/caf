@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,10 +19,12 @@ public class ArquivoTxt {
 	private static RefeitorioDao dao;
 	private static RelatorioDao daorel;
 	public static void writeComprovante(String status, String idcartao, String ultimoacesso) {
-		List<Funcionario> fun = new ArrayList<>();
+		Funcionario fun = new Funcionario();
 		dao = new RefeitorioDao();
 		String caminho = "C:\\Mais Sabor\\CAF\\comprovante.txt"; 
-		fun = dao.Registro(idcartao,"funcionarios");
+		fun = dao.Registro(idcartao,"funcionarios").get(0);
+		
+		
 		try(FileWriter fw = new FileWriter(caminho, false);
 			BufferedWriter bf = new BufferedWriter(fw);
 			PrintWriter p = new PrintWriter(bf)) {
@@ -30,10 +33,10 @@ public class ArquivoTxt {
 						+"\n             "+status.toUpperCase()
 						+ "\n**************************************"
 						+"\nID Cartão: " + idcartao
-						+"\nMatricula: " + fun.get(0).get("matricula")
-						+"\nNome: " + fun.get(0).get("nome")
-						+"\nSetor: " + fun.get(0).get("setor")
-						+"\nFunção: " + fun.get(0).get("funcao")
+						+"\nMatricula: " + fun.get("matricula")
+						+"\nNome: " + fun.get("nome")
+						+"\nSetor: " + fun.get("setor")
+						+"\nFunção: " + fun.get("funcao")
 						+"\nUltimo Acesso: " + ultimoacesso
 						+ "\n**************************************");
 						
@@ -45,15 +48,20 @@ public class ArquivoTxt {
 		}
 	}
 	
-	public static void writeRelNutrinor(String tprelatorio, String DataIni, String DataFim) {
+	public static void writeRel(String tprelatorio, String DataIni, String DataFim) {
+		//---------------------variaveis------------------------
 		dao = new RefeitorioDao();
 		daorel = new RelatorioDao();
 		String datar = "";
 		Registro reg;
 		String data = "";
 		tprelatorio = tprelatorio.toLowerCase();
-		String caminho = "C:\\Mais Sabor\\CAF\\relatorio"+tprelatorio+".txt"; 
+		String caminho = "C:\\Mais Sabor\\CAF\\relatorio "+tprelatorio+".txt"; 
 		List<Registro> registro = new ArrayList<>();
+		
+		//---------------------variaveis------------------------
+		
+		//---------------------definindo o tipo de relatorio------------------------
 		if(tprelatorio.equals("dia")) {
 			registro = daorel.RelatorioList("relDia", DataIni, DataFim);
 			data = DataIni;
@@ -68,21 +76,30 @@ public class ArquivoTxt {
 			registro = daorel.RelatorioList("faturamentoperiodo",DataIni, DataFim);
 			data = DataIni + " - " + DataFim;
 		}
-		
+		//---------------------definindo o tipo de relatorio------------------------
+		//---------------------Identificando e escrevendo o relatorio------------------------
 		try(FileWriter fw = new FileWriter(caminho, false);
 				BufferedWriter bf = new BufferedWriter(fw);
 				PrintWriter p = new PrintWriter(bf)) {
+			
 			int total = 0;
+			String tipo = "";
+			
 			if(tprelatorio.equals("dia")) {
+				tipo = "imprimir";
 				datar = "";
 				p.println("   ***CONTROLE DE ACESSO***\r\n"
 						+ "*******************************\r\n\n"
 						+ "      EXTRATO DE REFEIÇÕES");
 				total = 0;
 				for(int i = 0; i<registro.size(); i++) {
+					
+					
 					reg = new Registro();
 					reg = registro.get(i);
 					reg = tratamentodelinhas(reg,"extrato");
+					
+					
 					if(datar.isEmpty() || !(datar.equals(reg.get("datareg")))) {
 						if(!(datar.isEmpty()) && datar.equals(reg.get("datareg"))) {
 							p.println("\n                       total="+total);
@@ -92,12 +109,18 @@ public class ArquivoTxt {
 								+ "\n\n     Refeição          Qtd"
 								+ "\n     _____________________");
 					}
+					
+					
 					p.println("\n     "+reg.get("idtipo")+"  -  "+reg.get("tipo")+"  ("+reg.get("quantidade")+")");
+					
 					total = total + Integer.parseInt(reg.get("quantidade"));
 					datar = reg.get("datareg");
 				}
 				p.println("\n*******************************");
+				
+				
 			}else if(tprelatorio.equals("periodo")) {
+				tipo = "imprimir";
 				p.println("  ***CONTROLE DE ACESSO***\r\n"
 						+ "*******************************\r\n"
 						+ "     EXTRATO DE REFEIÇÕES");
@@ -114,9 +137,11 @@ public class ArquivoTxt {
 					total = total + Integer.parseInt(reg.get("quantidade"));
 					datar = reg.get("datareg");
 				}
-				p.println("\n             total=" + total);
+				p.println("\n                  total=" + total);
 				p.println("\n*******************************");
 			} else if(tprelatorio.toLowerCase().equals("faturamento mensal")) {
+				tipo = "abrir";
+				
 				p.println("                               ***CONTROLE DE ACESSO***\r\n"
 						+ "********************************************************************************\r\n"
 						+ "                                  FATURAMENTO MENSAL\r\n"
@@ -124,11 +149,38 @@ public class ArquivoTxt {
 						+ "Refeição\r\n"
 						+ "Data|Consumido|ConsumoMin|Diferença|Quentinhas|Totalref.|Vr Unitário|Valor Total\r\n");
 						   
+				//variaveis
 				String indice = "";
+				String totalnome = "";
+				double totalsoma = 0;
+				int totalconsumido = 0;
+				int totalconsumin = 0;
+				int totaldif = 0;
+				int totalref = 0;
+				int totalqq = 0;
+				DecimalFormat formato = new DecimalFormat("#.##");
+				reg = new Registro();
+				
+				
 				for(int i = 0; i<registro.size(); i++) {
 					reg = new Registro();
 					reg = registro.get(i);
 					reg = tratamentodelinhas(reg,"faturamentomensal");
+					
+					if(indice.equals(reg.get("idtipo")) == false && i>0){
+						totalnome = "Total de "+registro.get(i-1).get("nome")+":";
+						totalnome = tratarlinhacomref(totalnome, (Main.getWeek(reg.get("datareg")) + " - " + Main.formatDatedb(reg.get("datareg"))));
+						totalconsumido = Integer.parseInt(tratarlinhacomref(Integer.toString(totalconsumido), reg.get("qtdr")));
+						totalconsumin = Integer.parseInt(tratarlinhacomref(Integer.toString(totalconsumin), reg.get("qtdm")));
+						totaldif = Integer.parseInt(tratarlinhacomref(Integer.toString(totaldif), reg.get("diferenca")));
+						totalref = Integer.parseInt(tratarlinhacomref(Integer.toString(totalref), reg.get("totalref")));
+						totalqq = Integer.parseInt(tratarlinhacomref(Integer.toString(totalqq), reg.get("qq")));
+						
+						p.println("        "+totalnome+" "+totalconsumido+" | "+totalconsumin+" | "+totaldif+" | "+totalqq+" | "+totalref+" |     | R$"+formato.format(totalsoma)+"\r\n");
+						totalnome = ""; totalconsumido = 0; totalconsumin = 0; totaldif = 0; totalref = 0; totalqq = 0; totalsoma=0;
+						
+					}
+					
 					if(indice.equals(reg.get("idtipo")) == false) {
 						
 							p.println("________________________________________________________________________________\r\n\n"
@@ -139,9 +191,34 @@ public class ArquivoTxt {
 					p.println("        "+Main.getWeek(reg.get("datareg"))+" - "+Main.formatDatedb(reg.get("datareg"))+" | " + reg.get("qtdr") + " | " + 
 					reg.get("qtdm")+" | "+reg.get("diferenca").substring(reg.get("diferenca").indexOf("-"))+ " | " + reg.get("qq") + " | " + reg.get("totalref")+" | " + reg.get("vrunit").replace(".",",")+"| R$"+reg.get("total") +"\r\n");
 					indice = reg.get("idtipo");
-				}
+					//somas
+					totalref += Integer.parseInt(reg.get("totalref").replaceAll("\\s", ""));
+					totaldif += Integer.parseInt(reg.get("diferenca").replaceAll("\\s", ""));
+					totalconsumin += Integer.parseInt(reg.get("qtdm").replaceAll("\\s", ""));
+					totalconsumido += Integer.parseInt(reg.get("qtdr").replaceAll("\\s", ""));
+					totalsoma = totalsoma + Double.parseDouble(reg.get("total").replaceAll("\\s", ""));
+					totalqq += Integer.parseInt(reg.get("qq").replaceAll("\\s", ""));
+					//somas
+					if(i == registro.size()-1){
+						totalnome = "Total de "+registro.get(i-1).get("nome")+":";
+						totalnome = tratarlinhacomref(totalnome, (Main.getWeek(reg.get("datareg")) + " - " + Main.formatDatedb(reg.get("datareg"))));
+						totalconsumido = Integer.parseInt(tratarlinhacomref(Integer.toString(totalconsumido), reg.get("qtdr")));
+						totalconsumin = Integer.parseInt(tratarlinhacomref(Integer.toString(totalconsumin), reg.get("qtdm")));
+						totaldif = Integer.parseInt(tratarlinhacomref(Integer.toString(totaldif), reg.get("diferenca")));
+						totalref = Integer.parseInt(tratarlinhacomref(Integer.toString(totalref), reg.get("totalref")));
+						totalqq = Integer.parseInt(tratarlinhacomref(Integer.toString(totalqq), reg.get("qq")));
+						
+						p.println("        "+totalnome+" "+totalconsumido+" | "+totalconsumin+" | "+totaldif+" | "+totalqq+" | "+totalref+" |     | R$"+formato.format(totalsoma)+"\r\n");
+						
+						
+					}
+				}		                                                                       
+				//p.println("\n        Total Geral: "+totalconsumido+" | "+totalconsumin+" | "+totaldif+" | "+totalqq+" |  "+totalref+"      "+formato.format(totalsoma)+"\r\n");
+				
 			}  else if(tprelatorio.toLowerCase().equals("movdiario")) {
+				tipo = "abrir";
 				String indice = "";
+				total = 0;
 				p.println("*******************************************************************************\r\n"
 						+ "                                 MOVIMENTO DIÁRIO\r\n");
 						
@@ -161,11 +238,19 @@ public class ArquivoTxt {
 						p.println("           "+reg.get("tipo")+"                                             "+reg.get("quantidade")+"\r\n");
 					
 					indice = reg.get("datareg");
+					total = total + Integer.parseInt(reg.get("quantidade"));
 				}
+				p.println("                                                              Total:"+total+"");
 			}
 			
+			//---------------------Identificando e escrevendo o relatorio------------------------
+			
 			p.close();
-			ImprimireDeletar(caminho);
+			if(tipo.equals("imprimir")) {
+				ImprimireDeletar(caminho);
+			}else if(tipo.equals("abrir")) {
+				abrirarquivo(caminho);
+			}
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -218,11 +303,15 @@ public class ArquivoTxt {
 		
 		return reg;
 	}
-	
+	public static String tratarlinhacomref(String tratavel, String ref) {
+		while (tratavel.length() < ref.length()) {
+			tratavel = tratavel + " ";
+		}
+		return tratavel;
+	}
 	public static void ImprimireDeletar(String caminho) {
 		Desktop dk = Desktop.getDesktop();
 		File file = new File(caminho);
-		
 		try {
 			dk.print(file);
 			Thread.sleep(5000);
@@ -231,5 +320,15 @@ public class ArquivoTxt {
 			e.printStackTrace();
 		}
 		file.delete();
+	}
+	public static void abrirarquivo(String caminho) {
+		Desktop dk = Desktop.getDesktop();
+		File file = new File(caminho);
+		try {
+			dk.open(file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

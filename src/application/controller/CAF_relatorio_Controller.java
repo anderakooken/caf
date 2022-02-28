@@ -37,19 +37,19 @@ public class CAF_relatorio_Controller {
     		}
 	    	switch(cbrelatorio.getValue().getId()) {
 	    	case 5:
-	    		ArquivoTxt.writeRelNutrinor("dia", dataini.getValue().toString(), datafim.getValue().toString());
+	    		ArquivoTxt.writeRel("dia", dataini.getValue().toString(), datafim.getValue().toString());
 	    		break;
 	    	case 4:
-	    		ArquivoTxt.writeRelNutrinor("periodo", dataini.getValue().toString(), datafim.getValue().toString());
+	    		ArquivoTxt.writeRel("periodo", dataini.getValue().toString(), datafim.getValue().toString());
 	    		break;
 	    	case 3:
-	    		ArquivoTxt.writeRelNutrinor("movdiario", dataini.getValue().toString(), datafim.getValue().toString());
+	    		ArquivoTxt.writeRel("movdiario", dataini.getValue().toString(), datafim.getValue().toString());
 	    		break;
 	    	case 2:
-	    		
+	    		Main.dialogBox("Sem conexão com fluxos!", 1);
 	    		break;
 	    	case 1:
-	    		ArquivoTxt.writeRelNutrinor("faturamento mensal", dataini.getValue().toString(), datafim.getValue().toString());
+	    		ArquivoTxt.writeRel("faturamento mensal", dataini.getValue().toString(), datafim.getValue().toString());
 	    		break;
 	    	}
 	    	

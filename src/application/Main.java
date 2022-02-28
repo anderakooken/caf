@@ -36,6 +36,7 @@ public class Main extends Application {
 	public static Usuario user = new Usuario();
 	private static HttpURLConnection connection;
 	public void start(Stage primaryStage) {
+		
 		try {
 			Stagemain = primaryStage;
 			Pane FXMLlogin = FXMLLoader.load(getClass().getResource("view/CAF_inicio.fxml"));

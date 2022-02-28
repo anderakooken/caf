@@ -69,7 +69,7 @@ public class RelatorioDao {
 					+ "GROUP BY r.dtreg, nome";
 			break;
 		case "faturamentoperiodo":
-			sql = "SELECT tb_tipos_refeicoes.indice, CONCAT(tb_tipos_refeicoes.indice,' - ', tb_tipos_refeicoes.nmtipo) as nome, \r\n"
+			sql = "SELECT tb_tipos_refeicoes.indice, tb_tipos_refeicoes.nmtipo as nomereal, CONCAT(tb_tipos_refeicoes.indice,' - ', tb_tipos_refeicoes.nmtipo) as nome, \r\n"
 					+ "tb_refeicoes_dia.dtlnc, tb_tipos_refeicoes.nmtipo, (If(q.qtdr is null, 0 ,q.qtdr)) AS qtdrd,\r\n"
 					+ "tb_tipos_refeicoes.vrunit, If(tb_refeicoes_dia.qtd is null,0,tb_refeicoes_dia.qtd) AS qtdm,\r\n"
 					+ "If(tb_refeicoes_dia.qtdq  is null,0,tb_refeicoes_dia.qtdq) AS qq, (If(tb_refeicoes_dia.qtd is null,0,If(q.qtdr is null,0,q.qtdr))-tb_refeicoes_dia.qtd) AS dif, \r\n"
@@ -107,6 +107,7 @@ public class RelatorioDao {
 				while(rs.next()) {
 					Registro reg = new Registro();
 					reg.set("idtipo", rs.getString("indice"));
+					reg.set("nome", rs.getString("nomereal"));
 					reg.set("datareg", rs.getString("dtlnc"));
 					reg.set("tipo", rs.getString("nome"));
 					reg.set("qtdr", rs.getString("qtdrd"));

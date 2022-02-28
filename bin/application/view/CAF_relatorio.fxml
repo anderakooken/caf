@@ -6,10 +6,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<Pane maxHeight="-Infinity" fx:controller="application.controller.CAF_relatorio_Controller" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="253.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="253.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CAF_relatorio_Controller">
    <children>
-      <GridPane layoutX="125.0" layoutY="25.0" prefHeight="60.0" prefWidth="250.0">
+      <GridPane layoutX="125.0" layoutY="14.0" prefHeight="60.0" prefWidth="250.0">
         <columnConstraints>
           <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
@@ -21,7 +20,7 @@
             <ComboBox fx:id="cbrelatorio" prefWidth="250.0" GridPane.rowIndex="1" />
             <Label text="Relatório">
                <font>
-                  <Font size="20.0" />
+                  <Font name="System Bold" size="24.0" />
                </font>
             </Label>
          </children>
@@ -46,16 +45,16 @@
             <DatePicker fx:id="dataini" GridPane.columnIndex="1" />
             <Label text="Data Final" GridPane.columnIndex="3">
                <font>
-                  <Font size="15.0" />
+                  <Font name="System Bold" size="15.0" />
                </font>
             </Label>
             <DatePicker fx:id="datafim" GridPane.columnIndex="4" />
          </children>
       </GridPane>
       <Button layoutX="181.0" layoutY="214.0" mnemonicParsing="false" onAction="#imprimir" prefHeight="25.0" prefWidth="138.0" style="-fx-border-radius: 5;" text="IMPRIMIR" />
-      <Label fx:id="labelfil" layoutX="212.0" layoutY="106.0" text="FILTRAGEM">
+      <Label fx:id="labelfil" layoutX="201.0" layoutY="108.0" text="FILTRAGEM">
          <font>
-            <Font size="15.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Label>
    </children>
