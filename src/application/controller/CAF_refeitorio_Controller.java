@@ -117,8 +117,8 @@ public class CAF_refeitorio_Controller {
 			setRegistro();
 			dao.CREG(reg);
 			atualizar();
-			ArquivoTxt.writeComprovante("Aprovado", idcartao, " ");
-			labelacesso.setText("-");
+			ArquivoTxt.writeComprovante("Aprovado", idcartao);
+			labelevento.setText("-");
 			return;
 		}
 		
@@ -174,8 +174,8 @@ public class CAF_refeitorio_Controller {
 				setRegistro();
 				dao.CREG(reg);
 				atualizar();
-				ArquivoTxt.writeComprovante("Aprovado", idcartao, txtultimo.getText());
-				labelacesso.setText("-");
+				ArquivoTxt.writeComprovante("Aprovado", idcartao);
+				labelevento.setText("-");
 			}
 			else {
 				//Se a pessoa nao almocou hoje, mas nao tem direito a refeicao
@@ -192,7 +192,7 @@ public class CAF_refeitorio_Controller {
 					setRegistro();
 					dao.CREG(reg);
 					atualizar();
-					labelacesso.setText("-");
+					labelevento.setText("-");
 				}
 			}
 			

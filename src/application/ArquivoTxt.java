@@ -7,6 +7,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +20,9 @@ import application.model.Registro;
 public class ArquivoTxt {
 	private static RefeitorioDao dao;
 	private static RelatorioDao daorel;
-	public static void writeComprovante(String status, String idcartao, String ultimoacesso) {
+	public static void writeComprovante(String status, String idcartao) {
+		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String data = df.format(LocalDateTime.now());
 		Funcionario fun = new Funcionario();
 		dao = new RefeitorioDao();
 		String caminho = "C:\\Mais Sabor\\CAF\\comprovante.txt"; 
@@ -39,7 +43,7 @@ public class ArquivoTxt {
 						+"\nID: " + idcartao
 						+"\nMat: " + fun.get("matricula")
 						+"\nSetor: " + fun.get("setor")
-						+"\nData: " + ultimoacesso
+						+"\nData: " + data.substring(8,10) + "/" + data.substring(5,7) + "/" + data.substring(0, 4) + " - "+ data.substring(11, 19)
 						+ "\n\n\n");
 						
 				p.close();		
