@@ -32,7 +32,9 @@ public class ModifyScenes {
 					Pane root = fxml.load(getClass().getResource(scene));
 					Scene nwscene = new Scene(root);
 					stage.setScene(nwscene);
-					stage.setResizable(false);
+					//if(!(scene.equals("view/CAF_refeitorio.fxml"))) {
+						stage.setResizable(false);
+					//}
 					Stage stageatual = stage;
 					stage.getIcons().add(new Image(ModifyScenes.class.getResourceAsStream("view/Icons/CAF.png")));
 					nwscene.setOnKeyPressed(e ->{

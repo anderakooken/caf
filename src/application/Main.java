@@ -59,25 +59,27 @@ public class Main extends Application {
 	//Funcao para o dialog warning e information
 		public static void dialogBox(String text, int i){
 			Stage stage;
+			Alert alert = new Alert(null);
 			if(i==1) {
-					Alert alert = new Alert(AlertType.WARNING);
+					alert = new Alert(AlertType.WARNING);
 					alert.setTitle("Warning Dialog");
 					alert.setHeaderText("Atenção!");
 					stage = (Stage) alert.getDialogPane().getScene().getWindow();
 					stage.getIcons().add(new Image(Main.class.getResourceAsStream("view/Icons/Atencao.png")));
 					alert.setContentText(text);
-					alert.showAndWait();
+					alert.show();
 					
 			} else if(i==2) {
-				Alert alert = new Alert(AlertType.INFORMATION);
+				alert = new Alert(AlertType.INFORMATION);
 				
 				alert.setTitle("Information Dialog");
 				alert.setHeaderText("Atenção!");
 				stage = (Stage) alert.getDialogPane().getScene().getWindow();
 				stage.getIcons().add(new Image(Main.class.getResourceAsStream("view/Icons/information.png")));
 				alert.setContentText(text);
-				alert.showAndWait();
+				alert.show();
 			}
+			
 		}
 		//Funcao para o dialog confirmation.
 		public static Optional<ButtonType> ConfirmationDialog(String Header, String text){

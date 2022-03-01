@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 	
-	private static String url = "jdbc:mysql://localhost:3306/caf?useTimezone=true&serverTimezone=UTC";
-	private static String user = "root";
-	private static String password = "Msabor@900";
+	private static String url = "jdbc:mysql://192.168.254.216:3306/caf?useTimezone=true&serverTimezone=UTC";
+	private static String user = "caf";
+	private static String password = "CAF2000@";
 
 	public static Connection getConnection() {
 		// nome do driver.

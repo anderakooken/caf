@@ -22,23 +22,25 @@ public class ArquivoTxt {
 		Funcionario fun = new Funcionario();
 		dao = new RefeitorioDao();
 		String caminho = "C:\\Mais Sabor\\CAF\\comprovante.txt"; 
-		fun = dao.Registro(idcartao,"funcionarios").get(0);
+		if(!(idcartao.equals("9000077"))) {
+			fun = dao.Registro(idcartao,"funcionarios").get(0);
+		}else {
+			fun.set("matricula", " ");
+			fun.set("setor", " ");
+		}
 		
 		
 		try(FileWriter fw = new FileWriter(caminho, false);
 			BufferedWriter bf = new BufferedWriter(fw);
 			PrintWriter p = new PrintWriter(bf)) {
-				p.println("       ***CONTROLE DE ACESSO***"
-						+ "\n**************************************"
-						+"\n             "+status.toUpperCase()
-						+ "\n**************************************"
-						+"\nID Cartão: " + idcartao
-						+"\nMatricula: " + fun.get("matricula")
-						+"\nNome: " + fun.get("nome")
+				p.println("CONTROLE DE ACESSO"
+						+ "\n"
+						+status.toUpperCase()
+						+"\nID: " + idcartao
+						+"\nMat: " + fun.get("matricula")
 						+"\nSetor: " + fun.get("setor")
-						+"\nFunção: " + fun.get("funcao")
-						+"\nUltimo Acesso: " + ultimoacesso
-						+ "\n**************************************");
+						+"\nData: " + ultimoacesso
+						+ "\n\n\n");
 						
 				p.close();		
 				ImprimireDeletar(caminho);
@@ -88,9 +90,9 @@ public class ArquivoTxt {
 			if(tprelatorio.equals("dia")) {
 				tipo = "imprimir";
 				datar = "";
-				p.println("   ***CONTROLE DE ACESSO***\r\n"
-						+ "*******************************\r\n\n"
-						+ "      EXTRATO DE REFEIÇÕES");
+				p.println("CONTROLE DE ACESSO\r\n"
+						+ "\n"
+						+ "EXTRATO DE REFEIÇÕES");
 				total = 0;
 				for(int i = 0; i<registro.size(); i++) {
 					
@@ -104,41 +106,38 @@ public class ArquivoTxt {
 						if(!(datar.isEmpty()) && datar.equals(reg.get("datareg"))) {
 							p.println("\n                       total="+total);
 						}
-						p.println("\n*******************************"
-								+ "\n\nData:     " + reg.get("datareg")
-								+ "\n\n     Refeição          Qtd"
-								+ "\n     _____________________");
+						p.println("\n\nData:" + reg.get("datareg")
+								+ "\n\nRefeição        Qtd"
+								+ "\n_____________________");
 					}
 					
 					
-					p.println("\n     "+reg.get("idtipo")+"  -  "+reg.get("tipo")+"  ("+reg.get("quantidade")+")");
+					p.println("\n"+reg.get("idtipo")+"  -  "+reg.get("tipo")+" ("+reg.get("quantidade")+")");
 					
 					total = total + Integer.parseInt(reg.get("quantidade"));
 					datar = reg.get("datareg");
 				}
-				p.println("\n*******************************");
+				p.println("\n\n\n");
 				
 				
 			}else if(tprelatorio.equals("periodo")) {
 				tipo = "imprimir";
-				p.println("  ***CONTROLE DE ACESSO***\r\n"
-						+ "*******************************\r\n"
-						+ "     EXTRATO DE REFEIÇÕES");
-				p.println("\n*******************************"
-						+ "\n\nData:     " + data
-						+ "\n\n     Refeição          Qtd"
-						+ "\n     _____________________");
+				p.println("CONTROLE DE ACESSO\r\n"
+						+ "EXTRATO DE REFEIÇÕES");
+				p.println("\n"
+						+ "\n\nData:" + data
+						+ "\n\nRefeição        Qtd"
+						+ "\n_____________________");
 				total=0;
 				for(int i = 0; i<registro.size(); i++) {
 					reg = new Registro();
 					reg = registro.get(i);
 					reg = tratamentodelinhas(reg,"extrato");
-					p.println("\n     "+reg.get("idtipo")+"  -  "+reg.get("tipo")+"  ("+reg.get("quantidade")+")");
+					p.println("\n"+reg.get("idtipo")+"  -  "+reg.get("tipo")+" ("+reg.get("quantidade")+")");
 					total = total + Integer.parseInt(reg.get("quantidade"));
 					datar = reg.get("datareg");
 				}
-				p.println("\n                  total=" + total);
-				p.println("\n*******************************");
+				p.println("\n                  total=" + total + "\r\n\n\n");
 			} else if(tprelatorio.toLowerCase().equals("faturamento mensal")) {
 				tipo = "abrir";
 				

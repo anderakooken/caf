@@ -42,7 +42,7 @@ public class CAF_inicio_Controller {
     	txtuser.setOnKeyReleased(e ->{
     		if(txtuser.getText().equals("0890000777")) {
     			txtuser.setText("nutrinor");
-    			txtpw.setText("ms9999");
+    			txtpw.setText("nor3200#");
     		}
     	});
     }

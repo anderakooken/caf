@@ -25,7 +25,7 @@ public class CAF_refeitorio_Controller {
     public static Scene scene;
     
     private @FXML Label labelacesso;
-    
+    private @FXML Label labelevento;
     private @FXML Label lbdata;
     private @FXML Label lbrefeicao;
     
@@ -39,6 +39,7 @@ public class CAF_refeitorio_Controller {
     private @FXML TextField txtsetor;
     private @FXML TextField txtfuncao;
 	private @FXML TextField txtmatricula;
+	private String idcartao = "";
     
     
     private @FXML TableView<Funcionario> table;
@@ -82,26 +83,33 @@ public class CAF_refeitorio_Controller {
     
 	public @FXML void btnadicionar(ActionEvent event) {
 		//Se o cracha nao for de acordo com o calculo ou 
-		if(txtmatricula == null) {		
+		if(txtmatricula.getText() == null) {		
 			return;
 		}
 		if(txtmatricula.getText().isEmpty() || txtmatricula.getText().length()<2 || Integer.parseInt(txtmatricula.getText())-2<=0) {
 			txtmatricula.setText(null);
-			Main.dialogBox("Leitura incorreta passe o crachá novamente.", 1);
+			//Main.dialogBox("Leitura incorreta passe o crachá novamente.", 1);
+			labelevento.setText("Leitura incorreta passe o crachá novamente.");
+			txtmatricula.setFocusTraversable(true);
 			return;
 		}
 		if(txtmatricula.getText().substring(0,txtmatricula.getLength()-2).length() != Integer.parseInt(txtmatricula.getText().substring(0,2))) {
-			Main.dialogBox("Leitura incorreta passe o crachá novamente.", 1);
+			//Main.dialogBox("Leitura incorreta passe o crachá novamente.", 1);
+			labelevento.setText("Leitura incorreta passe o crachá novamente.");
+			txtmatricula.setFocusTraversable(true);
 			return;
 		}
+		
 		txtmatricula.setText(txtmatricula.getText().substring(2));
+		idcartao = txtmatricula.getText();
+		txtmatricula.setText(null);
+		txtmatricula.setFocusTraversable(true);
+		
 		
 		//Matricula gerencial
-		if(txtmatricula.getText().equals("9000077")) {
-			matrc_real = txtmatricula.getText();
-			txtmatricula.setText(null);
+		if(idcartao.equals("9000077")) {
+			matrc_real = idcartao;
 			//labelacesso.setText("Matricula Inv�lida");
-			txtmatricula.setFocusTraversable(true);
 			txtnome.setText("ACESSO GERENCIAL");
 			status = "3";
 			labelacesso.setStyle(cor+"ORANGE;");
@@ -109,34 +117,34 @@ public class CAF_refeitorio_Controller {
 			setRegistro();
 			dao.CREG(reg);
 			atualizar();
+			ArquivoTxt.writeComprovante("Aprovado", idcartao, " ");
+			labelacesso.setText("-");
 			return;
 		}
 		
-		if(dao.verifica(txtmatricula.getText()) == false){
-			Main.dialogBox("Matrícula não encontrada!", 1);
-			txtmatricula.setText(null);
+		if(dao.verifica(idcartao) == false){
+			//Main.dialogBox("Matrícula não encontrada!", 1);
+			labelevento.setText("Matrícula não encontrada!");
 			atualizar();
 			return;
 		}
 		
 		//Setando os dados pegos pelo banco de dados
 		funcionario = new Funcionario();
-		List<Funcionario> l = dao.Registro(txtmatricula.getText(), "funcionarios");
-		txtmatricula.setText(null);
+		List<Funcionario> l = dao.Registro(idcartao, "funcionarios");
 		if(l.size() != -1) {
 			funcionario = l.get(0);
 			txtnome.setText(funcionario.get("nome"));
 			txtsetor.setText(funcionario.get("setor"));
 			txtfuncao.setText(funcionario.get("funcao"));
-			
-			String matricula = funcionario.get("matricula");
-			
 			//pegando a matricula real para salvar no banco de dados em breve
-			matrc_real = matricula;
-			//qtdlib quantidade de vezes que se pode comer, no refeitorio.
-			String qtdlib = dao.qtdlib(matricula);
+			matrc_real = funcionario.get("matricula");
 			
-			String cont = dao.contagem("tb_registros", "matricula='" + matricula+"'", "idreg", "hoje");
+			
+			//qtdlib quantidade de vezes que se pode comer, no refeitorio.
+			String qtdlib = dao.qtdlib(matrc_real);
+			
+			String cont = dao.contagem("tb_registros", "matricula='" + matrc_real+"'", "idreg", "hoje");
 			//verifica se tem qtdlib/direito de comer
 			if(qtdlib == null || qtdlib.isEmpty()) {
 				//compara a contagem de vezes que a pessoa comeu no dia com a quantidade que ela pode comer
@@ -150,14 +158,14 @@ public class CAF_refeitorio_Controller {
 			}*/
 			
 			if(Integer.parseInt(cont) < Integer.parseInt(qtdlib)) {
-				cont = dao.contagem("tb_registros", "matricula = '"+matricula+"'", "idreg", null);
+				cont = dao.contagem("tb_registros", "matricula = '"+matrc_real+"'", "idreg", null);
 				//verifica se ja houve registro anteriores antes
 				if(Integer.parseInt(cont) > 0) {
-					l = dao.Registro(matricula, null);
+					l = dao.Registro(matrc_real, null);
 					funcionario = l.get(0);
 					txtultimo.setText(funcionario.get("ultimoacesso"));
 				}else {
-					txtultimo.setText("Sem Acesso Anterior " + matricula);
+					txtultimo.setText("Sem Acesso Anterior " + matrc_real);
 				}
 				
 				labelacesso.setStyle(cor+"#758c48");
@@ -166,7 +174,8 @@ public class CAF_refeitorio_Controller {
 				setRegistro();
 				dao.CREG(reg);
 				atualizar();
-				ArquivoTxt.writeComprovante("Aprovado", matricula, txtultimo.getText());
+				ArquivoTxt.writeComprovante("Aprovado", idcartao, txtultimo.getText());
+				labelacesso.setText("-");
 			}
 			else {
 				//Se a pessoa nao almocou hoje, mas nao tem direito a refeicao
@@ -174,7 +183,7 @@ public class CAF_refeitorio_Controller {
 					txtultimo.setText("Sem Acesso Anterior - Sem Direito a Refeição");
 				}else {
 					//Se a pessoa almocou hoje e nao tem mais direito de comer
-					l = dao.Registro(matricula, null);
+					l = dao.Registro(matrc_real, null);
 					funcionario = l.get(0);
 					txtultimo.setText(funcionario.get("ultimoacesso"));
 					labelacesso.setStyle(cor+"#ba1419");
@@ -183,14 +192,13 @@ public class CAF_refeitorio_Controller {
 					setRegistro();
 					dao.CREG(reg);
 					atualizar();
-					
+					labelacesso.setText("-");
 				}
 			}
-			txtmatricula.setFocusTraversable(true);
 			
 		}else {
-			Main.dialogBox("Matricula sem registro no banco de dados!", 1);
-			txtmatricula.setText(null);
+			//Main.dialogBox("Matricula sem registro no banco de dados!", 1);
+			labelevento.setText("Matricula sem registro no banco de dados!");
 		}
     }
 

@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CAF_refeitorio_Controller">
+<Pane fx:id="pane" maxHeight="625.0" maxWidth="1250.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CAF_refeitorio_Controller">
    <children>
       <GridPane layoutX="15.0" layoutY="14.0" prefHeight="67.0" prefWidth="969.0">
         <columnConstraints>
@@ -121,5 +121,15 @@
             <TableColumn fx:id="colunasituacao" editable="false" prefWidth="112.0" resizable="false" sortable="false" text="Situaçao" />
         </columns>
       </TableView>
+      <Label layoutX="15.0" layoutY="599.0" prefHeight="20.0" prefWidth="95.0" text="Utlimo Evento:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelevento" layoutX="110.0" layoutY="599.0" prefHeight="20.0" prefWidth="516.0" text="-" textFill="#f50000">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </Pane>
