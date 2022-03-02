@@ -36,7 +36,7 @@ public class ModifyScenes {
 						stage.setResizable(false);
 					//}
 					Stage stageatual = stage;
-					stage.getIcons().add(new Image(ModifyScenes.class.getResourceAsStream("view/Icons/CAF.png")));
+					stage.getIcons().add(new Image(ModifyScenes.class.getResourceAsStream("view/Icons/java.png")));
 					nwscene.setOnKeyPressed(e ->{
 						if(e.getCode() == KeyCode.ESCAPE) {
 							close();

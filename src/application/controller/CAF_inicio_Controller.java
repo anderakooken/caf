@@ -30,19 +30,21 @@ public class CAF_inicio_Controller {
     
     @FXML void initialize() {
     	txtuser.setOnKeyPressed(e ->{
+    		if(txtuser.getText().equals("0890000777")) {
+    			txtuser.setText("nutrinor");
+    			txtpw.setText("nor3200#");
+    		}
     		if(e.getCode() == KeyCode.ENTER) {
+    			if(txtuser.getText().equals("0890000777")) {
+        			txtuser.setText("nutrinor");
+        			txtpw.setText("nor3200#");
+        		}
     			btnlogar(null);
     		}
     	});
     	txtpw.setOnKeyPressed(e ->{
     		if(e.getCode() == KeyCode.ENTER) {
     			btnlogar(null);
-    		}
-    	});
-    	txtuser.setOnKeyReleased(e ->{
-    		if(txtuser.getText().equals("0890000777")) {
-    			txtuser.setText("nutrinor");
-    			txtpw.setText("nor3200#");
     		}
     	});
     }

@@ -70,10 +70,10 @@ public class CAF_refeitorio_Controller {
     	
     	txtmatricula.setFocusTraversable(true);
     	txtmatricula.setOnKeyPressed(e ->{
-    		if(e.getCode() == KeyCode.ENTER && !(txtmatricula.getText().isEmpty())) {
+    		if(e.getCode() == KeyCode.ENTER) {
     			btnadicionar(null);
     		}
-    		if(e.getCode() == KeyCode.TAB && !(txtmatricula.getText().isEmpty())) {
+    		if(e.getCode() == KeyCode.TAB) {
     			btnadicionar(null);
     		}
     	});
@@ -82,28 +82,37 @@ public class CAF_refeitorio_Controller {
     }
     
 	public @FXML void btnadicionar(ActionEvent event) {
+		
+		txtmatricula.requestFocus();
+		
 		//Se o cracha nao for de acordo com o calculo ou 
-		if(txtmatricula.getText() == null) {		
+		if(txtmatricula.getText() == null) {
+			
+			txtmatricula.setText(null);
+			return;
+		}
+		if(!(txtmatricula.getText().matches("[+-]?\\d*(\\.\\d+)?")) || txtmatricula.getText().contains(".") || txtmatricula.getText().contains(",")) {
+			labelevento.setText("Leitura incorreta tente novamente!");
+			txtmatricula.setText(null);
 			return;
 		}
 		if(txtmatricula.getText().isEmpty() || txtmatricula.getText().length()<2 || Integer.parseInt(txtmatricula.getText())-2<=0) {
-			txtmatricula.setText(null);
+
 			//Main.dialogBox("Leitura incorreta passe o crachá novamente.", 1);
-			labelevento.setText("Leitura incorreta passe o crachá novamente.");
-			txtmatricula.setFocusTraversable(true);
+			labelevento.setText("Leitura incorreta passe o crachá novamente!");
+			txtmatricula.setText(null);
 			return;
 		}
 		if(txtmatricula.getText().substring(0,txtmatricula.getLength()-2).length() != Integer.parseInt(txtmatricula.getText().substring(0,2))) {
 			//Main.dialogBox("Leitura incorreta passe o crachá novamente.", 1);
-			labelevento.setText("Leitura incorreta passe o crachá novamente.");
-			txtmatricula.setFocusTraversable(true);
+			labelevento.setText("Leitura incorreta passe o crachá novamente!");
+			txtmatricula.setText(null);
 			return;
 		}
 		
 		txtmatricula.setText(txtmatricula.getText().substring(2));
 		idcartao = txtmatricula.getText();
 		txtmatricula.setText(null);
-		txtmatricula.setFocusTraversable(true);
 		
 		
 		//Matricula gerencial
@@ -204,6 +213,7 @@ public class CAF_refeitorio_Controller {
 
     
     @FXML void btnmovimento(ActionEvent event) {
+    	txtmatricula.requestFocus();
     	Main.modify.modify("view/CAF_refeitorio_relatorio.fxml", "Controle de Acesso - Relatório");
     }
     

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -9,7 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="900.0" style="-fx-background-color: #3333;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CAF_inicio_Controller">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="900.0" style="-fx-background-color: #3333;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CAF_inicio_Controller">
    <children>
       <MenuBar id="menu" fx:id="menu" disable="true" minHeight="24.0" minWidth="30.0" prefHeight="27.0" prefWidth="900.0">
         <menus>
@@ -18,13 +22,13 @@
                   <MenuItem mnemonicParsing="false" onAction="#openmenuref" text="Refeitorio" />
                   <MenuItem mnemonicParsing="false" onAction="#openmenufun" text="Funcionários" />
                   <MenuItem mnemonicParsing="false" onAction="#openmenuadi" text="Adicionais" />
-                  <MenuItem mnemonicParsing="false" text="Relatórios" onAction="#openmenurel"/>
+                  <MenuItem mnemonicParsing="false" onAction="#openmenurel" text="Relatórios" />
                   <Menu id="menulogin" mnemonicParsing="false" text="Login">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Alterar Senha" onAction="#openalterpw" />
-                        <MenuItem mnemonicParsing="false" text="Eventos" onAction="#opencadeventos" />
-                        <MenuItem mnemonicParsing="false" text="Refeições Dia" onAction="#openminrefperiodo" />
-                        <MenuItem mnemonicParsing="false" text="Exportar" visible="false"  />
+                        <MenuItem mnemonicParsing="false" onAction="#openalterpw" text="Alterar Senha" />
+                        <MenuItem mnemonicParsing="false" onAction="#opencadeventos" text="Eventos" />
+                        <MenuItem mnemonicParsing="false" onAction="#openminrefperiodo" text="Refeições Dia" />
+                        <MenuItem mnemonicParsing="false" text="Exportar" visible="false" />
                         <MenuItem mnemonicParsing="false" onAction="#Logout" text="Logout" />
                      </items>
                   </Menu>
@@ -33,9 +37,32 @@
       </MenuBar>
       <Pane fx:id="panelogin" prefHeight="342.0" prefWidth="900.0" styleClass="background" stylesheets="@../view.css">
          <children>
-            <Button fx:id="btnlogar" layoutX="412.0" layoutY="196.0" mnemonicParsing="false" onAction="#btnlogar" prefHeight="25.0" prefWidth="65.0" text="Logar" />
-            <TextField fx:id="txtuser" alignment="CENTER" layoutX="319.0" layoutY="126.0" prefWidth="250.0" promptText="Usuário" />
-            <PasswordField fx:id="txtpw" alignment="CENTER" layoutX="319.0" layoutY="160.0" prefHeight="25.0" prefWidth="250.0" promptText="Senha" />
+            <GridPane layoutX="325.0" layoutY="89.0" prefHeight="104.0" prefWidth="250.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextField fx:id="txtuser" alignment="CENTER" prefWidth="250.0" GridPane.rowIndex="1" />
+                  <PasswordField fx:id="txtpw" alignment="CENTER" prefHeight="25.0" prefWidth="250.0" GridPane.rowIndex="3" />
+                  <Label text="Usuário">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="Senha" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </GridPane>
+            <Button fx:id="btnlogar" layoutX="418.0" layoutY="211.0" mnemonicParsing="false" onAction="#btnlogar" prefHeight="25.0" prefWidth="65.0" text="Logar" />
          </children>
       </Pane>
    </children>
