@@ -15,121 +15,143 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="625.0" maxWidth="1250.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CAF_refeitorio_Controller">
+
+<FlowPane alignment="CENTER" fx:controller="application.controller.CAF_refeitorio_Controller" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane layoutX="15.0" layoutY="14.0" prefHeight="67.0" prefWidth="969.0">
-        <columnConstraints>
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="170.0" minWidth="170.0" prefWidth="170.0" />
-        </columnConstraints>
-        <rowConstraints>
-            <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" valignment="CENTER" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="45.0" minHeight="45.0" prefHeight="45.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <Pane fx:id="pane" maxHeight="625.0" maxWidth="1250.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1250.0">
          <children>
-            <TextField fx:id="txtmatricula" GridPane.rowIndex="1">
+            <GridPane layoutX="15.0" layoutY="14.0" prefHeight="67.0" prefWidth="969.0">
+               <children>
+                  <TextField fx:id="txtmatricula" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <Label text="Matricula">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="Nome" GridPane.columnIndex="2">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtnome" disable="true" editable="false" style="-fx-opacity: 1;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtsetor" disable="true" style="-fx-opacity: 1;" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <Label text="Setor" GridPane.columnIndex="4">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Label text="Função" GridPane.columnIndex="6">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtfuncao" disable="true" style="-fx-opacity: 1;" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <TextField fx:id="txtultimo" disable="true" style="-fx-opacity: 1;" GridPane.columnIndex="8" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </TextField>
+                  <Label text="Último Acesso" GridPane.columnIndex="8">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                  <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="170.0" minWidth="170.0" prefWidth="170.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="45.0" minHeight="45.0" prefHeight="45.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <Label fx:id="labelacesso" alignment="CENTER" layoutX="15.0" layoutY="117.0" prefHeight="95.0" prefWidth="1220.0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="65.0" />
+               </font>
+            </Label>
+            <Label layoutX="15.0" layoutY="96.0" text="Acesso:">
                <font>
                   <Font size="15.0" />
                </font>
-             </TextField>
-            <Label text="Matricula">
+            </Label>
+            <GridPane layoutX="1059.0" layoutY="221.0" prefHeight="30.0" prefWidth="175.0">
+               <children>
+                  <Button fx:id="btnadicionar" mnemonicParsing="false" onAction="#btnadicionar" prefHeight="25.0" prefWidth="109.0" text="Adicionar" />
+                  <Button fx:id="btnmovimento" mnemonicParsing="false" onAction="#btnmovimento" prefHeight="25.0" prefWidth="143.0" text="Movimento" GridPane.columnIndex="2" />
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
+            <Label layoutX="1130.0" layoutY="607.0" text="DATA:" />
+            <Label layoutX="1005.0" layoutY="607.0" prefHeight="17.0" prefWidth="66.0" text="HORA:" />
+            <Label fx:id="lbhora" alignment="CENTER" layoutX="1042.0" layoutY="607.0" prefHeight="17.0" prefWidth="82.0" text="00:00:00 AM">
                <font>
-                  <Font size="15.0" />
-               </font></Label>
-            <Label text="Nome" GridPane.columnIndex="2">
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbdata" layoutX="1170.0" layoutY="607.0" prefHeight="17.0" prefWidth="66.0" text="00/00/00">
                <font>
-                  <Font size="15.0" />
-               </font></Label>
-            <TextField fx:id="txtnome" disable="true" editable="false" style="-fx-opacity: 1;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <TableView id="my-table" fx:id="table" focusTraversable="false" layoutX="15.0" layoutY="259.0" opacity="0.98" prefHeight="337.0" prefWidth="1220.0">
+               <columns>
+                  <TableColumn fx:id="colunamatricula" editable="false" prefWidth="83.0" resizable="false" sortable="false" text="Matricula" />
+                  <TableColumn fx:id="colunanome" prefWidth="299.0" resizable="false" sortable="false" text="Nome" />
+                  <TableColumn fx:id="colunadepartamento" editable="false" prefWidth="333.0" resizable="false" sortable="false" text="Departamento" />
+                  <TableColumn fx:id="colunafuncao" editable="false" prefWidth="253.0" resizable="false" sortable="false" text="Função" />
+                  <TableColumn fx:id="colunaacesso" editable="false" prefWidth="110.0" resizable="false" sortable="false" text="Hora de Acesso" />
+                  <TableColumn fx:id="colunasituacao" editable="false" prefWidth="112.0" resizable="false" sortable="false" text="Situaçao" />
+               </columns>
+            </TableView>
+            <Label layoutX="15.0" layoutY="599.0" prefHeight="20.0" prefWidth="95.0" text="Último Evento:">
                <font>
-                  <Font size="15.0" />
-               </font></TextField>
-            <TextField fx:id="txtsetor" disable="true" style="-fx-opacity: 1;" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelevento" layoutX="110.0" layoutY="599.0" prefHeight="20.0" prefWidth="516.0" text="-" textFill="#f50000">
                <font>
-                  <Font size="15.0" />
-               </font></TextField>
-            <Label text="Setor" GridPane.columnIndex="4">
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="lbrefeicao" alignment="CENTER" layoutX="929.0" layoutY="607.0" prefHeight="17.0" prefWidth="66.0" text="ALMOÇO">
                <font>
-                  <Font size="15.0" />
-               </font></Label>
-            <Label text="Função" GridPane.columnIndex="6">
-               <font>
-                  <Font size="15.0" />
-               </font></Label>
-            <TextField fx:id="txtfuncao" disable="true" style="-fx-opacity: 1;" GridPane.columnIndex="6" GridPane.rowIndex="1">
-               <font>
-                  <Font size="15.0" />
-               </font></TextField>
-            <TextField fx:id="txtultimo" disable="true" style="-fx-opacity: 1;" GridPane.columnIndex="8" GridPane.rowIndex="1">
-               <font>
-                  <Font size="15.0" />
-               </font></TextField>
-            <Label text="Último Acesso" GridPane.columnIndex="8">
-               <font>
-                  <Font size="15.0" />
-               </font></Label>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="874.0" layoutY="607.0" prefHeight="17.0" prefWidth="66.0" text="REFEIÇÃO:" />
          </children>
-      </GridPane>
-      <Label fx:id="labelacesso" alignment="CENTER" layoutX="15.0" layoutY="117.0" prefHeight="95.0" prefWidth="1220.0" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="65.0" />
-         </font>
-      </Label>
-      <Label layoutX="15.0" layoutY="96.0" text="Acesso:">
-         <font>
-            <Font size="15.0" />
-         </font></Label>
-      <GridPane layoutX="1059.0" layoutY="221.0" prefHeight="30.0" prefWidth="175.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Button fx:id="btnadicionar" mnemonicParsing="false" onAction="#btnadicionar" prefHeight="25.0" prefWidth="109.0" text="Adicionar" />
-            <Button fx:id="btnmovimento" mnemonicParsing="false" onAction="#btnmovimento" prefHeight="25.0" prefWidth="143.0" text="Movimento" GridPane.columnIndex="2" />
-         </children>
-      </GridPane>
-      <Label layoutX="1130.0" layoutY="607.0" text="DATA:" />
-      <Label layoutX="1005.0" layoutY="607.0" prefHeight="17.0" prefWidth="66.0" text="REFEIÇÃO:" />
-      <Label fx:id="lbrefeicao" alignment="CENTER" layoutX="1060.0" layoutY="607.0" prefHeight="17.0" prefWidth="66.0" text="ALMOÇO">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font></Label>
-      <Label fx:id="lbdata" layoutX="1170.0" layoutY="607.0" prefHeight="17.0" prefWidth="66.0" text="00/00/00">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Label>
-      <TableView id="my-table" fx:id="table" focusTraversable="false" layoutX="15.0" layoutY="259.0" opacity="0.98" prefHeight="337.0" prefWidth="1220.0">
-        <columns>
-          <TableColumn fx:id="colunamatricula" editable="false" prefWidth="83.0" resizable="false" sortable="false" text="Matricula" />
-          <TableColumn fx:id="colunanome" prefWidth="299.0" resizable="false" sortable="false" text="Nome" />
-            <TableColumn fx:id="colunadepartamento" editable="false" prefWidth="333.0" resizable="false" sortable="false" text="Departamento" />
-            <TableColumn fx:id="colunafuncao" editable="false" prefWidth="253.0" resizable="false" sortable="false" text="Função" />
-            <TableColumn fx:id="colunaacesso" editable="false" prefWidth="110.0" resizable="false" sortable="false" text="Hora de Acesso" />
-            <TableColumn fx:id="colunasituacao" editable="false" prefWidth="112.0" resizable="false" sortable="false" text="Situaçao" />
-        </columns>
-      </TableView>
-      <Label layoutX="15.0" layoutY="599.0" prefHeight="20.0" prefWidth="95.0" text="Utlimo Evento:">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="labelevento" layoutX="110.0" layoutY="599.0" prefHeight="20.0" prefWidth="516.0" text="-" textFill="#f50000">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
+      </Pane>
    </children>
-</Pane>
+</FlowPane>

@@ -1,7 +1,9 @@
 package application.controller;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import application.ArquivoTxt;
@@ -9,6 +11,8 @@ import application.Main;
 import application.dao.RefeitorioDao;
 import application.model.Funcionario;
 import application.model.Registro;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +21,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 public class CAF_refeitorio_Controller {
 	
@@ -24,6 +29,7 @@ public class CAF_refeitorio_Controller {
     
     public static Scene scene;
     
+    private @FXML Label lbhora;
     private @FXML Label labelacesso;
     private @FXML Label labelevento;
     private @FXML Label lbdata;
@@ -55,6 +61,7 @@ public class CAF_refeitorio_Controller {
     private Funcionario funcionario = new Funcionario();
     private Registro reg = new Registro();
  	private DateTimeFormatter dt = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+ 	private SimpleDateFormat formatador = new SimpleDateFormat("hh:mm:ss a");
  	private String data = dt.format(LocalDateTime.now());
  	private String dataf = data.substring(8,10) + "/" + data.substring(5,7) + "/" + data.substring(0, 4);
  	private String status;
@@ -79,6 +86,7 @@ public class CAF_refeitorio_Controller {
     	});
     	
     	initTable();
+    	hora();
     }
     
 	public @FXML void btnadicionar(ActionEvent event) {
@@ -248,6 +256,20 @@ public class CAF_refeitorio_Controller {
 		reg.set("vrunit", l.get(1));
 		reg.set("idusuario", Main.user.getMatricula());
 		reg.set("status", status);
+    }
+    
+    private void hora() {
+    	KeyFrame frame = new KeyFrame(Duration.millis(1000), e -> {
+    		Date agora = new Date();
+    		lbhora.setText(formatador.format(agora));
+    		if(lbhora.getText().equals("10:00:00 PM") || lbhora.getText().equals("03:00:00 AM") || lbhora.getText().equals("04:00:00 AM") || lbhora.getText().equals("09:00:00 AM")
+    			|| lbhora.getText().equals("10:00:00 AM") || lbhora.getText().equals("03:00:00 PM") || lbhora.getText().equals("04:00:00 PM") || lbhora.getText().equals("09:00:00 PM")) {
+    			atualizar();
+    		}
+    	});
+		Timeline timeline = new Timeline(frame);
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		timeline.play();
     }
 }
 

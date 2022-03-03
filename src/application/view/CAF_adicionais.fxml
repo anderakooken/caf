@@ -23,11 +23,11 @@
           <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <MaskTextField fx:id="txtmatricula" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <TextField fx:id="txtmatricula" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font size="15.0" />
                </font>
-            </MaskTextField>
+            </TextField>
             <Label text="Matricula" GridPane.columnIndex="1">
                <font>
                   <Font size="14.0" />
@@ -38,11 +38,11 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <MaskTextField fx:id="txtquant" GridPane.columnIndex="3" GridPane.rowIndex="1">
+            <TextField fx:id="txtquant" GridPane.columnIndex="3" GridPane.rowIndex="1">
                <font>
                   <Font size="15.0" />
                </font>
-            </MaskTextField>
+            </TextField>
          </children>
       </GridPane>
       <TableView fx:id="table" layoutX="15.0" layoutY="117.0" onMouseClicked="#TableClick" prefHeight="389.0" prefWidth="1070.0">

@@ -90,6 +90,9 @@ public class Funcionario {
 		}
 	}
 	
+	public String getIdreg() {
+		return idreg;
+	}
 	
 	public String getHoraacesso() {
 		return horaacesso;

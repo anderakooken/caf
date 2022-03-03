@@ -19,10 +19,27 @@ public class FuncionarioDao {
 		con = ConnectionFactory.getConnection();
 	}
 	
-	public void adicionarfun(Funcionario f) {
-		String sql = "INSERT INTO tb_funcionarios SET idcartao='"+f.get("idcartao")+"', nome='"+f.get("nome")+"',"
-				+ " setor='"+f.get("setor")+"', funcao='"+f.get("funcao")+"', matricula='"+f.get("matricula")+"', registro='"+f.get("registro")+"',"
-				+ "origem=1";
+	public void funCED(Funcionario f, int tipo) {
+		String sql = "";
+		String msg = "";
+		switch(tipo) {
+		case 1:
+			sql = "INSERT INTO tb_funcionarios SET idcartao='"+f.get("idcartao")+"', nome='"+f.get("nome")+"',"
+					+ " setor='"+f.get("setor")+"', funcao='"+f.get("funcao")+"', matricula='"+f.get("matricula")+"', registro='"+f.get("registro")+"',"
+					+ "origem=1";
+			msg= "Erro ao cadastrar um funcionário!";
+			break;
+		case 2:
+			sql = "UPDATE tb_funcionarios SET idcartao='"+f.get("idcartao")+"', nome='"+f.get("nome")+"',"
+					+ " setor='"+f.get("setor")+"', funcao='"+f.get("funcao")+"', matricula='"+f.get("matricula")+"', registro='"+f.get("registro")+"',"
+					+ "origem=1 WHERE idreg='" + f.get("idreg")+"'";
+			msg= "Erro ao atualizar um funcionário!";
+			break;
+		case 3:
+			sql = "DELETE FROM tb_funcionarios WHERE idreg='"+f.get("idreg")+"'";
+			msg= "Erro ao excluir um funcionário!";
+			break;
+		}
 		
 			PreparedStatement ps;
 			try {
@@ -32,7 +49,7 @@ public class FuncionarioDao {
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				Main.dialogBox("Erro ao cadastrar!", 1);
+				Main.dialogBox(msg, 1);
 				return;
 			}
 			
@@ -50,6 +67,7 @@ public class FuncionarioDao {
 			ResultSet rs = ps.executeQuery();){
 			while(rs.next()) {
 				Funcionario f = new Funcionario();
+				
 				f.set("matricula", rs.getString("matricula"));
 				f.set("nome", rs.getString("nome"));
 				f.set("idcartao", rs.getString("idcartao"));

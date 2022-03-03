@@ -12,6 +12,8 @@
    <children>
       <GridPane layoutX="14.0" layoutY="14.0" prefHeight="50.0" prefWidth="1070.0">
         <columnConstraints>
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
             <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" />
@@ -27,57 +29,68 @@
           <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" valignment="TOP" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <MaskTextField fx:id="txtmatricula" GridPane.rowIndex="1">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </MaskTextField>
-            <TextField fx:id="txtnome" GridPane.columnIndex="2" GridPane.rowIndex="1">
+            <TextField fx:id="txtid" GridPane.rowIndex="1">
                <font>
                   <Font size="15.0" />
                </font>
             </TextField>
-            <MaskTextField fx:id="txtcracha" GridPane.columnIndex="4" GridPane.rowIndex="1">
+            <TextField fx:id="txtmatricula" GridPane.columnIndex="2" GridPane.rowIndex="1">
                <font>
                   <Font size="15.0" />
                </font>
-            </MaskTextField>
-            <ComboBox fx:id="cbsetor" prefHeight="25.0" prefWidth="279.0" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-            <ComboBox fx:id="cbfuncao" prefHeight="25.0" prefWidth="319.0" GridPane.columnIndex="8" GridPane.rowIndex="1" />
-            <Label text="Matricula">
+            </TextField>
+            <TextField fx:id="txtnome" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="txtcracha" GridPane.columnIndex="6" GridPane.rowIndex="1">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </TextField>
+            <ComboBox fx:id="cbsetor" prefHeight="25.0" prefWidth="279.0" GridPane.columnIndex="8" GridPane.rowIndex="1" />
+            <ComboBox fx:id="cbfuncao" prefHeight="25.0" prefWidth="319.0" GridPane.columnIndex="10" GridPane.rowIndex="1" />
+            <Label text="Matricula" GridPane.columnIndex="2">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label text="Nome" GridPane.columnIndex="2">
+            <Label text="Nome" GridPane.columnIndex="4">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label text="Crachá" GridPane.columnIndex="4">
+            <Label text="Crachá" GridPane.columnIndex="6">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label text="Setor" GridPane.columnIndex="6">
+            <Label text="Setor" GridPane.columnIndex="8">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label text="Função" GridPane.columnIndex="8">
+            <Label text="Função" GridPane.columnIndex="10">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="ID">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
          </children>
       </GridPane>
-      <TableView fx:id="table" layoutX="14.0" layoutY="107.0" prefHeight="389.0" prefWidth="1070.0">
+      <TableView fx:id="table" layoutX="14.0" layoutY="107.0" onMouseClicked="#tableclick" prefHeight="389.0" prefWidth="1070.0">
         <columns>
-          <TableColumn fx:id="cmatricula" prefWidth="104.0" text="MATRICULA" />
-          <TableColumn fx:id="cnome" prefWidth="310.0" text="NOME" />
-            <TableColumn fx:id="csetor" prefWidth="237.0" text="SETOR" />
-            <TableColumn fx:id="cfuncao" prefWidth="222.0" text="FUNÇAO" />
-            <TableColumn fx:id="ccracha" prefWidth="166.0" text="CRACHÁ" />
+            <TableColumn fx:id="cid" prefWidth="50.0" text="ID" />
+          <TableColumn fx:id="cmatricula" prefWidth="92.0" text="MATRICULA" />
+          <TableColumn fx:id="cnome" prefWidth="303.0" text="NOME" />
+            <TableColumn fx:id="csetor" prefWidth="258.0" text="SETOR" />
+            <TableColumn fx:id="cfuncao" prefWidth="245.0" text="FUNÇAO" />
+            <TableColumn fx:id="ccracha" prefWidth="112.0" text="CRACHÁ" />
         </columns>
       </TableView>
       <GridPane layoutX="14.0" layoutY="498.0" prefHeight="14.0" prefWidth="228.0">
@@ -111,7 +124,7 @@
         </rowConstraints>
          <children>
             <Button mnemonicParsing="false" onAction="#adicionarfun" prefHeight="25.0" prefWidth="158.0" text="Adicionar" />
-            <Button mnemonicParsing="false" onAction="#atualizarfluxos" prefHeight="25.0" prefWidth="169.0" text="Atualizar Fluxos" GridPane.columnIndex="1" />
+            <Button mnemonicParsing="false" onAction="#excluirfuncionario" prefHeight="25.0" prefWidth="169.0" text="Excluir" GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </children>

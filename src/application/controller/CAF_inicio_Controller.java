@@ -1,8 +1,13 @@
 package application.controller;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import application.Main;
 import application.ModifyScenes;
 import application.dao.MainDao;
 import application.model.Usuario;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,13 +15,14 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class CAF_inicio_Controller {
 	
     private @FXML MenuBar menu;
     
     private @FXML Menu menum;
-    
+    private @FXML Label labelhora;
     
     private @FXML Button btnlogar;
     private @FXML TextField txtuser = new TextField();
@@ -25,6 +31,7 @@ public class CAF_inicio_Controller {
     private @FXML Pane panelogin;
     private Stage stage = Main.Stagemain;
     private MainDao dao = new MainDao();
+    private SimpleDateFormat formatador = new SimpleDateFormat("hh:mm:ss a");
     
     String msg_a = "Você não tem permissão de acesso.";
     
@@ -47,6 +54,7 @@ public class CAF_inicio_Controller {
     			btnlogar(null);
     		}
     	});
+    	hora();
     }
     
     @FXML void btnlogar(ActionEvent event) {
@@ -164,4 +172,16 @@ public class CAF_inicio_Controller {
 		menu.setDisable(true);
 		Main.user = new Usuario();
     }
+    
+    
+    private void hora() {
+    	KeyFrame frame = new KeyFrame(Duration.millis(1000), e -> {
+    		Date agora = new Date();
+    		labelhora.setText(formatador.format(agora)); 
+    	});
+		Timeline timeline = new Timeline(frame);
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		timeline.play();
+    }
+    
 }

@@ -98,34 +98,6 @@ public class Main extends Application {
 			
 		}
 		
-	/*	public static void imprimir(String tipo) {
-			switch(tipo.toLowerCase()) {
-			case "relatorio hoje":
-				Desktop dk = Desktop.getDesktop();
-				try(FileWriter fw = new FileWriter("C:\\CAF\\impressao.txt",false);
-						BufferedWriter bf = new BufferedWriter(fw);
-						PrintWriter print = new PrintWriter(bf);) {
-					
-					print.print("");
-					
-				}
-				catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				//File file = new File("C:\\teste.pdf");
-				try {
-					dk.print(new File("C:\\impressao.txt"));
-					//dk.open(file);
-					//System.out.println("teste");
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-		}*/
-		
 		
 		public static int selectCB(String item, ComboBox<Combobox> cb) {
 	    	int i = -1;

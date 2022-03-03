@@ -11,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
-import util.MaskTextField;
 
 public class CAF_adicionais_Controller {
 	
@@ -19,10 +18,10 @@ public class CAF_adicionais_Controller {
 
     
     private @FXML TextField txtfuncao;
-    private @FXML MaskTextField txtquant;
+    private @FXML TextField txtquant;
     private @FXML TextField txtnome;
     private @FXML TextField txtsetor;
-    private @FXML MaskTextField txtmatricula;
+    private @FXML TextField txtmatricula;
 
     
     private @FXML TableView<Funcionario> table;
@@ -39,7 +38,7 @@ public class CAF_adicionais_Controller {
     private @FXML void initialize(){
     	initTable();
     	setClick();
-    	setMask();
+    	
     }
     
     @FXML void adicionar(ActionEvent event) {
@@ -48,11 +47,20 @@ public class CAF_adicionais_Controller {
     		Main.dialogBox("Preencha todos os campos!", 1);
     		return;
     	}
+    	if(!(txtquant.getText().matches("[+-]?\\d*(\\.\\d+)?")) || txtquant.getText().contains(".") || txtquant.getText().contains(",")) {
+    		Main.dialogBox("Digite uma quantidade válida!", 1);
+    		return;
+    	}
+    	if(!(txtmatricula.getText().matches("[+-]?\\d*(\\.\\d+)?")) || txtmatricula.getText().contains(".") || txtmatricula.getText().contains(",")) {
+    		Main.dialogBox("Digite uma matricula válida!", 1);
+    		return;
+    	}
+    	
     	setFun();
 		if(Main.ConfirmationDialog("Cadastrar", "Você tem certeza disso?").get() == ButtonType.OK) {
 			List<Funcionario> flist = dao.listAdcionais("WHERE emp_matricula=" + txtmatricula.getText());
 			if(flist.size()>0) {
-				Main.dialogBox("N�o se pode cadastrar a mesma matricula duas vezes!", 1);
+				Main.dialogBox("Não se pode cadastrar a mesma matricula duas vezes!", 1);
 				txtnome.setText(flist.get(0).get("nome"));
 				txtsetor.setText(flist.get(0).get("setor"));
 				txtfuncao.setText(flist.get(0).get("funcao"));
@@ -71,6 +79,14 @@ public class CAF_adicionais_Controller {
         		Main.dialogBox("Preencha todos os campos!", 1);
         		return;
         	}
+    	if(!(txtquant.getText().matches("[+-]?\\d*(\\.\\d+)?")) || txtquant.getText().contains(".") || txtquant.getText().contains(",")) {
+    		Main.dialogBox("Digite uma quantidade válida!", 1);
+    		return;
+    	}
+    	if(!(txtmatricula.getText().matches("[+-]?\\d*(\\.\\d+)?")) || txtmatricula.getText().contains(".") || txtmatricula.getText().contains(",")) {
+    		Main.dialogBox("Digite uma matricula válida!", 1);
+    		return;
+    	}
         	setFun();
     		if(Main.ConfirmationDialog("Editar", "Você tem certeza disso?").get() == ButtonType.OK) {
     			dao.CE(f, 2);
@@ -126,9 +142,5 @@ public class CAF_adicionais_Controller {
     private void setFun() {
     	f.set("matricula", txtmatricula.getText());
     	f.set("quantidade", txtquant.getText());
-    }
-    private void setMask() {
-    	txtmatricula.setMask("NNNNNNNN");
-    	txtquant.setMask("N!");
     }
 }

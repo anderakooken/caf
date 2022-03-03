@@ -37,6 +37,10 @@ public class ModifyScenes {
 					//}
 					Stage stageatual = stage;
 					stage.getIcons().add(new Image(ModifyScenes.class.getResourceAsStream("view/Icons/java.png")));
+					if(scene.equals("view/CAF_refeitorio.fxml")) {
+						stage.setMaximized(true);
+						stage.setResizable(true);
+					}
 					nwscene.setOnKeyPressed(e ->{
 						if(e.getCode() == KeyCode.ESCAPE) {
 							close();

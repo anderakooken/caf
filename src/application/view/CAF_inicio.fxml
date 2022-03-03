@@ -15,7 +15,7 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="900.0" style="-fx-background-color: #3333;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CAF_inicio_Controller">
    <children>
-      <MenuBar id="menu" fx:id="menu" disable="true" minHeight="24.0" minWidth="30.0" prefHeight="27.0" prefWidth="900.0">
+      <MenuBar id="menu" fx:id="menu" disable="true" minHeight="24.0" minWidth="30.0" prefHeight="48.0" prefWidth="900.0">
         <menus>
           <Menu id="menugeral" fx:id="menum" mnemonicParsing="false" text="Menu">
                <items>
@@ -65,5 +65,14 @@
             <Button fx:id="btnlogar" layoutX="418.0" layoutY="211.0" mnemonicParsing="false" onAction="#btnlogar" prefHeight="25.0" prefWidth="65.0" text="Logar" />
          </children>
       </Pane>
+      <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="16.0" prefWidth="900.0">
+         <items>
+            <Label fx:id="labelhora" prefHeight="14.0" prefWidth="89.0" text="00:00:00 AM">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+         </items>
+      </ToolBar>
    </children>
 </VBox>
