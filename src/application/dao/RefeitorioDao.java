@@ -13,30 +13,28 @@ import application.model.Funcionario;
 import application.model.Registro;
 
 public class RefeitorioDao {
+	public DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	private static Connection con;
 	public RefeitorioDao() {
 		new ConnectionFactory();
 		con = ConnectionFactory.getConnection();
 	}
 	
-	public DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	
 	public List<String> lista() {
-		String sql = "SELECT * FROM tb_tipos_refeicoes";
-		int data = Integer.parseInt(df.format(LocalDateTime.now()).substring(11,13));
+		String sql = "SELECT * FROM tb_tipos_refeicoes WHERE IF(HOUR(CURRENT_TIME()) = '0', \"24\", "
+				+ "TIME(CURRENT_TIME())) BETWEEN cast(concat(hr_ini,\":00\") AS TIME) AND cast(concat(hr_fim+1,\":00\") AS TIME) \r\n"
+				+ "OR IF(HOUR(CURRENT_TIME()) = '0', \"24\", TIME(CURRENT_TIME())) >= '22:00:00' OR TIME(CURRENT_TIME()) <='03:00:00';";
 		List<String> lista = new ArrayList<>();
 			
 			try {
 				PreparedStatement ps = con.prepareStatement(sql);
 				ResultSet rs = ps.executeQuery();
 				
-				while(rs.next()) {
-					
-						if(data >= rs.getInt("hr_ini") && data <= rs.getInt("hr_fim")) {
+				if(rs.next()) {
 							lista.add(rs.getString("nmtipo"));
 							lista.add(rs.getString("vrunit"));
 							lista.add(rs.getString("idtipo"));
-					
-						}
 				}
 				}catch(SQLException e) {
 				e.printStackTrace();
@@ -48,7 +46,7 @@ public class RefeitorioDao {
 	public void CREG(Registro reg) {
 		String sql = "INSERT INTO tb_registros SET matricula = '" + reg.get("matricula") + "', dtreg ='" + reg.get("datareg") + "',"
 				+ " hrreg = '"+reg.get("horareg") + "', idusuario='" + reg.get("idusuario") + "', statusreg='"+reg.get("status")+"',"
-				+ " reg_empregado = '"+reg.get("registro") +"', idnegado='"+reg.get("idnegado")+"', idtipo = '"+reg.get("idtipo") + "',"
+				+ " reg_empregado = '"+reg.get("registro") +"', idtipo = '"+reg.get("idtipo") + "',"
 				+ " vrunit= '"+reg.get("vrunit") + "'";
 		
 		try {

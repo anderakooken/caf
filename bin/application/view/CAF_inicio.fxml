@@ -67,7 +67,7 @@
       </Pane>
       <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="16.0" prefWidth="900.0">
          <items>
-            <Label fx:id="labelhora" prefHeight="14.0" prefWidth="89.0" text="00:00:00 AM">
+            <Label fx:id="labelhora" prefHeight="14.0" prefWidth="89.0" text="--:--:--">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

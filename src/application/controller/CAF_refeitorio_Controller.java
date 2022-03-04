@@ -61,7 +61,7 @@ public class CAF_refeitorio_Controller {
     private Funcionario funcionario = new Funcionario();
     private Registro reg = new Registro();
  	private DateTimeFormatter dt = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
- 	private SimpleDateFormat formatador = new SimpleDateFormat("hh:mm:ss a");
+ 	private SimpleDateFormat formatador = new SimpleDateFormat("HH:mm:ss");
  	private String data = dt.format(LocalDateTime.now());
  	private String dataf = data.substring(8,10) + "/" + data.substring(5,7) + "/" + data.substring(0, 4);
  	private String status;
@@ -73,7 +73,12 @@ public class CAF_refeitorio_Controller {
 		
     	lbdata.setText(dataf);
     	//int hora = Integer.parseInt(data.substring(11,13));
-    	lbrefeicao.setText(dao.lista().get(0));
+    	List<String> l = dao.lista();
+    	if(l.size()>0 && !(l.isEmpty())) {
+    		lbrefeicao.setText(l.get(0));
+    	}else {
+    		lbrefeicao.setText("-");
+    	}
     	
     	txtmatricula.setFocusTraversable(true);
     	txtmatricula.setOnKeyPressed(e ->{
@@ -221,6 +226,8 @@ public class CAF_refeitorio_Controller {
 
     
     @FXML void btnmovimento(ActionEvent event) {
+    
+    	System.out.println(lbhora.getText().substring(0,8));
     	txtmatricula.requestFocus();
     	Main.modify.modify("view/CAF_refeitorio_relatorio.fxml", "Controle de Acesso - Relatório");
     }
@@ -238,7 +245,12 @@ public class CAF_refeitorio_Controller {
     
     private void atualizar() {
     	dt = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-    	lbrefeicao.setText(dao.lista().get(0));
+    	List<String> l = dao.lista();
+    	if(l.size()>0 && !(l.isEmpty())) {
+    		lbrefeicao.setText(l.get(0));
+    	}else {
+    		lbrefeicao.setText("-");
+    	}
     	data = dt.format(LocalDateTime.now());
     	dataf = data.substring(8,10) + "/" + data.substring(5,7) + "/" + data.substring(0, 4);
     	lbdata.setText(dataf);
@@ -252,8 +264,14 @@ public class CAF_refeitorio_Controller {
 		data = dt.format(LocalDateTime.now());
 		reg.set("horareg", data.substring(11,19));
 		reg.set("datareg", data.substring(0,10));
-		reg.set("idtipo", l.get(2));
-		reg.set("vrunit", l.get(1));
+		
+		if(l.size()>0 && !(l.isEmpty())) {
+			reg.set("idtipo", l.get(2));
+			reg.set("vrunit", l.get(1));
+		}else {
+			reg.set("idtipo", "0");
+			reg.set("vrunit", "0.00");
+		}
 		reg.set("idusuario", Main.user.getMatricula());
 		reg.set("status", status);
     }
@@ -261,9 +279,8 @@ public class CAF_refeitorio_Controller {
     private void hora() {
     	KeyFrame frame = new KeyFrame(Duration.millis(1000), e -> {
     		Date agora = new Date();
-    		lbhora.setText(formatador.format(agora));
-    		if(lbhora.getText().equals("10:00:00 PM") || lbhora.getText().equals("03:00:00 AM") || lbhora.getText().equals("04:00:00 AM") || lbhora.getText().equals("09:00:00 AM")
-    			|| lbhora.getText().equals("10:00:00 AM") || lbhora.getText().equals("03:00:00 PM") || lbhora.getText().equals("04:00:00 PM") || lbhora.getText().equals("09:00:00 PM")) {
+    		lbhora.setText(formatador.format(agora).toUpperCase());
+    		if(lbhora.getText().equals("10:00:00") || lbhora.getText().equals("16:00:00") || lbhora.getText().equals("04:00:00") || lbhora.getText().equals("22:00:00")) {
     			atualizar();
     		}
     	});

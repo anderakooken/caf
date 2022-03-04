@@ -31,7 +31,7 @@ public class CAF_inicio_Controller {
     private @FXML Pane panelogin;
     private Stage stage = Main.Stagemain;
     private MainDao dao = new MainDao();
-    private SimpleDateFormat formatador = new SimpleDateFormat("hh:mm:ss a");
+    private SimpleDateFormat formatador = new SimpleDateFormat("HH:mm:ss");
     
     String msg_a = "Você não tem permissão de acesso.";
     
@@ -177,7 +177,7 @@ public class CAF_inicio_Controller {
     private void hora() {
     	KeyFrame frame = new KeyFrame(Duration.millis(1000), e -> {
     		Date agora = new Date();
-    		labelhora.setText(formatador.format(agora)); 
+    		labelhora.setText(formatador.format(agora).toUpperCase()); 
     	});
 		Timeline timeline = new Timeline(frame);
 		timeline.setCycleCount(Timeline.INDEFINITE);
