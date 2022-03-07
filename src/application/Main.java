@@ -44,6 +44,7 @@ public class Main extends Application {
 			Stagemain.setOnCloseRequest(e -> Platform.exit());
 			Stagemain.setTitle("CAF - Controle de Acesso");
 			Stagemain.setResizable(false);
+			MainScene.getStylesheets().add(getClass().getResource("view.css").toExternalForm());
 			Stagemain.getIcons().add(new Image(this.getClass().getResourceAsStream("view/Icons/java.png")));
 			Stagemain.setScene(MainScene);
 			Stagemain.show();
