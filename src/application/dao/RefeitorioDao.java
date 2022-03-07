@@ -22,9 +22,11 @@ public class RefeitorioDao {
 	
 	
 	public List<String> lista() {
-		String sql = "SELECT * FROM tb_tipos_refeicoes WHERE IF(HOUR(CURRENT_TIME()) = '0', \"24\", "
-				+ "TIME(CURRENT_TIME())) BETWEEN cast(concat(hr_ini,\":00\") AS TIME) AND cast(concat(hr_fim+1,\":00\") AS TIME) \r\n"
-				+ "OR IF(HOUR(CURRENT_TIME()) = '0', \"24\", TIME(CURRENT_TIME())) >= '22:00:00' OR TIME(CURRENT_TIME()) <='03:00:00';";
+		String sql = "SELECT * FROM tb_tipos_refeicoes WHERE IF(HOUR(CURRENT_TIME()) = '0', \"24\","
+				+ " TIME(CURRENT_TIME())) BETWEEN cast(concat(hr_ini,\":00\") AS TIME) AND "
+				+ "cast(concat(hr_fim+1,\":00\") AS TIME) \r\n"
+				+ "OR (TIME(CURRENT_TIME()) >= '22:00:00' AND "
+				+ "cast(concat(hr_ini,\":00\") AS TIME) >= '22:00:00') OR (TIME(CURRENT_TIME()) <='04:00:00' AND cast(concat(hr_fim,\":00\") AS TIME) <='04:00:00');";
 		List<String> lista = new ArrayList<>();
 			
 			try {
