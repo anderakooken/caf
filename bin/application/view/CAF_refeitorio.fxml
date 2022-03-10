@@ -17,7 +17,7 @@
 
 <FlowPane alignment="CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.controller.CAF_refeitorio_Controller">
    <children>
-      <Pane fx:id="pane" maxHeight="625.0" maxWidth="1250.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1250.0" stylesheets="@../view.css">
+      <Pane fx:id="pane" maxHeight="625.0" maxWidth="1250.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1250.0">
          <children>
             <GridPane layoutX="15.0" layoutY="14.0" prefHeight="67.0" prefWidth="969.0">
                <children>
