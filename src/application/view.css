@@ -9,3 +9,13 @@
 #menulogin{
     -fx-background-radius: 5.0; 
 }
+
+*.table-view *.column-header *.label{
+
+    -fx-alignment: CENTER;
+}
+.table-view .table-column {
+    /*-fx-alignment: CENTER-RIGHT;*/
+    -fx-alignment: CENTER;
+    -fx-background-insets: 0, 0 0 1 0;
+}

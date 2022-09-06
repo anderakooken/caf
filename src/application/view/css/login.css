@@ -1,0 +1,10 @@
+#panelogin{
+	-fx-background-color: white;
+	-fx-background-radius: 10px;
+}
+.text_{
+	-fx-font-size: 20px;
+}
+.text_ :hover{
+	-fx-font-size: 70px;
+}

@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -57,6 +58,12 @@ public class Main extends Application {
 	}
 
 	//Funcao para o dialog warning e information
+	/***
+	 * Cria uma mesagem na tela.                     
+	 * @see 1 - WARNING 2 - INFORMATION
+	 * @category Sem retorno, Alert
+	 * @author Kauan t.i
+	 * ***/
 	public static void dialogBox(String text, int i){
 		Stage stage;
 		Alert alert = new Alert(null);
@@ -83,6 +90,12 @@ public class Main extends Application {
 
 		}		
 	}
+	/***
+	 * Cria uma mesagem de confirmação na tela.                     
+	 * @return Optional<ButtonType>
+	 * @category Com retorno, Alert
+	 * @author Kauan t.i
+	 * ***/
 	//Funcao para o dialog confirmation.
 	public static Optional<ButtonType> ConfirmationDialog(String Header, String text){
 		
@@ -97,6 +110,12 @@ public class Main extends Application {
 
 		return result;		
 	}	
+	/***
+	 * Verifica se o item tem no determinado combobox e se tiver retorna o index da localização do item.                     
+	 * @return int
+	 * @category Com retorno
+	 * @author Kauan t.i
+	 * ***/
 	public static int selectCB(String item, ComboBox<Combobox> cb) {
 	
 		int i = -1;
@@ -112,6 +131,13 @@ public class Main extends Application {
 	    return i;
 	}
 
+	
+	/***
+	 * Reinicia o programa                    
+	 * @return int
+	 * @category Sem retorno.
+	 * @author Kauan t.i
+	 * ***/
 	public static void reiniciar() {
 		
 		for(int i=0; i<ModifyScenes.listS.size(); i++) {
@@ -125,7 +151,12 @@ public class Main extends Application {
 		Main.user = new Usuario();
 		Platform.runLater(() -> new Main().start(new Stage()));		
 	}	
-
+	/***
+	 * Pega o nome do dia da semana                    
+	 * @return String
+	 * @category Com retorno.
+	 * @author Kauan t.i
+	 * ***/
 	public static String getWeek(String date){
 		
 		String dayWeek = "---";
@@ -149,12 +180,24 @@ public class Main extends Application {
 		}
 		return dayWeek;
 	}
+	
+	/***
+	 * Formata a data que vem do banco de dados para a convencional                  
+	 * @return String
+	 * @category Com retorno.
+	 * @author Kauan t.i
+	 * ***/
 	public static String formatDatedb(String data) {
 		String newdate = "";
 		newdate = data.substring(8,10) + "/" + data.substring(5,7) + "/" + data.substring(0, 4);
 		return newdate;
 	}
-		
+	/***
+	 * Verifica no ads se o usuário existe, através do formato json.                    
+	 * @return Boolean
+	 * @category Com retorno.
+	 * @author Kauan t.i
+	 * ***/
 	public static Boolean verifyJSON(String login, String password) {
 
 		BufferedReader reader;
@@ -222,5 +265,4 @@ public class Main extends Application {
 		
 		return false;
 	}
-		
 }

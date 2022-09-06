@@ -23,7 +23,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
-public class CAF_refeitorio_Controller {
+public class CAF_refeitorio {
 	
     private @FXML Pane pane = new Pane();
     
@@ -109,9 +109,15 @@ public class CAF_refeitorio_Controller {
 			txtmatricula.setText(null);
 			return;
 		}
-		if(txtmatricula.getText().isEmpty() || txtmatricula.getText().length()<2 || Integer.parseInt(txtmatricula.getText())-2<=0) {
+		try{
+			if(txtmatricula.getText().isEmpty() || txtmatricula.getText().length()<2 || Integer.parseInt(txtmatricula.getText())-2<=0) {
 
-			//Main.dialogBox("Leitura incorreta passe o crachá novamente.", 1);
+				//Main.dialogBox("Leitura incorreta passe o crachá novamente.", 1);
+				labelevento.setText("Leitura incorreta passe o crachá novamente!");
+				txtmatricula.setText(null);
+				return;
+			}
+		}catch(NumberFormatException e){
 			labelevento.setText("Leitura incorreta passe o crachá novamente!");
 			txtmatricula.setText(null);
 			return;
@@ -223,7 +229,6 @@ public class CAF_refeitorio_Controller {
 			labelevento.setText("Matricula sem registro no banco de dados!");
 		}
     }
-
     
     @FXML void btnmovimento(ActionEvent event) {
     
@@ -256,6 +261,7 @@ public class CAF_refeitorio_Controller {
     	lbdata.setText(dataf);
     	initTable();
     }
+    
     private void setRegistro() {
     	List<String> l = dao.lista();
     	dt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

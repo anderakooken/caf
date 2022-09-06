@@ -1,7 +1,13 @@
 package application.controller;
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import application.Functions;
 import application.Main;
 import application.ModifyScenes;
 import application.dao.MainDao;
@@ -27,12 +33,13 @@ public class CAF_inicio_Controller {
     private @FXML Button btnlogar;
     private @FXML TextField txtuser = new TextField();
     private @FXML TextField txtpw = new TextField();
-    
+    private @FXML CheckBox cklembrar;
     private @FXML Pane panelogin;
     private Stage stage = Main.Stagemain;
     private MainDao dao = new MainDao();
+	private String cache = System.getenv("APPDATA") + "\\CAF\\" + ".cache";
     private SimpleDateFormat formatador = new SimpleDateFormat("HH:mm:ss");
-    
+    JSONObject json = new JSONObject();
     String msg_a = "Você não tem permissão de acesso.";
     
     @FXML void initialize() {
@@ -54,9 +61,37 @@ public class CAF_inicio_Controller {
     			btnlogar(null);
     		}
     	});
+		cache();
     	hora();
     }
-    
+   
+	private void cache() {
+		File f = new File(cache);
+
+		if (f.exists()) {
+			Object[] parametros = { 1, cache };
+			var l = Functions.getvalues(parametros);
+			try {
+				if ((boolean) l.get(0)) {
+					json = (JSONObject) l.get(1);
+					txtuser.setText(json.get("usuario").toString());
+					cklembrar.setSelected(json.getBoolean("remember"));
+					if (json.getBoolean("remember")) {
+						txtpw.setText(new String(Base64.getDecoder().decode(json.get("password").toString())));
+					}
+
+				}
+			} catch (JSONException e) {
+				// e.printStackTrace();
+			}
+		} else {
+			f = new File(System.getenv("APPDATA") + "\\CAF");
+			if (!f.exists()) {
+				f.mkdir();
+			}
+		}
+	}
+
     @FXML void btnlogar(ActionEvent event) {
     	if (txtuser.getText().isEmpty() || 
     		txtpw.getText().isEmpty()) {
@@ -64,9 +99,10 @@ public class CAF_inicio_Controller {
     		} else {
     			
     			//Consulta JSON
-    			if((Main.verifyJSON(txtuser.getText(), txtpw.getText())) == false) {
-    				return;
-    			};
+    			
+				if((Main.verifyJSON(txtuser.getText(), txtpw.getText())) == false) {
+						return;
+				};
     			
     			//verificação na funcao do banco de dados
     			if (dao.UserConfirm(txtuser.getText())) {
@@ -77,6 +113,18 @@ public class CAF_inicio_Controller {
     				panelogin.setVisible(false);
     				panelogin.setDisable(true);
     				menu.setDisable(false);
+					
+					json.put("usuario", txtuser.getText());
+					json.put("remember", cklembrar.isSelected());
+					if (cklembrar.isSelected()) {
+						json.put("password", Base64.getEncoder().encodeToString(txtpw.getText().getBytes()));
+					} else {
+						json.put("password", "");
+					}
+					Object[] parametros = { 1, cache, json };
+					Functions.addvalues(parametros);
+
+					txtpw.setText("");
     				//Futuro controle de acesso
     				txtuser.setText("");
     				txtpw.setText("");
@@ -85,7 +133,8 @@ public class CAF_inicio_Controller {
     			}
     		}
     }
-    @FXML void openmenuref(ActionEvent event) {
+  
+	@FXML void openmenuref(ActionEvent event) {
     	if (Main.user.getNvacesso() <= 2) {
 
 			Main.modify.modify("view/CAF_refeitorio.fxml", "Controle de Acesso - Refeitório");
@@ -96,8 +145,7 @@ public class CAF_inicio_Controller {
 			Main.dialogBox(msg_a, 1);
 		}
     }
-
-    
+  
     @FXML void openmenufun(ActionEvent event) {
     	if(Main.user.getNvacesso() <= 1) {
     		Main.modify.modify("view/CAF_funcionarios.fxml", "Controle de Acesso - Cadastro de Funcionários");
@@ -107,8 +155,7 @@ public class CAF_inicio_Controller {
 			Main.dialogBox(msg_a, 1);
 		}
     }
-
-    
+ 
     @FXML void openmenuadi(ActionEvent event) {
     	if(Main.user.getNvacesso() <= 1) {
     		Main.modify.modify("view/CAF_adicionais.fxml", "Controle de Acesso - Adicionais");
@@ -119,7 +166,6 @@ public class CAF_inicio_Controller {
 		}
     }
 
-    
     @FXML void openmenurel(ActionEvent event) {
     	if(Main.user.getNvacesso() <= 1) {
     		Main.modify.modify("view/CAF_relatorio.fxml", "CAF - Relatório");
@@ -139,7 +185,8 @@ public class CAF_inicio_Controller {
 			Main.dialogBox(msg_a, 1);
 		}
     }
-    @FXML void opencadeventos(ActionEvent event) {
+    
+	@FXML void opencadeventos(ActionEvent event) {
     	if(Main.user.getNvacesso() <= 1) {
     		Main.modify.modify("view/CAF_login_eventos.fxml", "CAF - Eventos");
     		
@@ -148,7 +195,8 @@ public class CAF_inicio_Controller {
 			Main.dialogBox(msg_a, 1);
 		}
     }
-    @FXML void openminrefperiodo(ActionEvent event) {
+    
+	@FXML void openminrefperiodo(ActionEvent event) {
     	if(Main.user.getNvacesso() <= 1) {
     		Main.modify.modify("view/CAF_login_refeicoesperiodo.fxml", "CAF - Eventos");
     		
@@ -157,8 +205,7 @@ public class CAF_inicio_Controller {
 			Main.dialogBox(msg_a, 1);
 		}
     }
-    
-    
+      
     @FXML void Logout(ActionEvent event) {
     	for(int i=0; i<ModifyScenes.listS.size(); i++) {
 			Stage s = ModifyScenes.listS.get(i);
@@ -171,8 +218,7 @@ public class CAF_inicio_Controller {
 		panelogin.setDisable(false);
 		menu.setDisable(true);
 		Main.user = new Usuario();
-    }
-    
+    } 
     
     private void hora() {
     	KeyFrame frame = new KeyFrame(Duration.millis(1000), e -> {

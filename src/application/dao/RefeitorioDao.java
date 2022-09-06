@@ -65,7 +65,7 @@ public class RefeitorioDao {
 		//Parametro funcionario para pegar os dados pela matricula, e pegar o ultimo registro feito
 		List<Funcionario> fun = new ArrayList<>();
 		String data = df.format(LocalDateTime.now());
-		String sql = "SELECT r.matricula, f.idcartao, r.dtreg, r.hrreg, s.nmstatus, f.nome, f.setor, f.funcao FROM tb_registros r "
+		String sql = "SELECT r.matricula, f.idcartao, r.dtreg, r.hrreg, s.nmstatus, trim(f.nome) as nome, f.setor, f.funcao FROM tb_registros r "
 				+ "LEFT JOIN tb_status s ON r.statusreg = s.idstatus "
 				+ "LEFT JOIN tb_funcionarios f ON r.matricula = f.matricula ";
 		if(tabela == null) {

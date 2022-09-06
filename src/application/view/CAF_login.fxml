@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
+
+
+<FlowPane alignment="CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: black;" stylesheets="@css/login.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane id="panelogin" fx:id="login_pane" prefHeight="700.0" prefWidth="500.0">
+         <children>
+            <Label layoutX="165.0" layoutY="14.0" text="LOGIN">
+               <font>
+                  <Font name="Arial Black" size="48.0" />
+               </font>
+            </Label>
+            <TextField layoutX="75.0" layoutY="224.0" prefHeight="40.0" prefWidth="350.0" style="-fx-font-family: Fredoka; -fx-background-size: 100000;" styleClass="text_" text="bfb">
+               <font>
+                  <Font name="FontAwesome" size="64.0" />
+               </font>
+            </TextField>
+            <PasswordField layoutX="75.0" layoutY="330.0" prefHeight="40.0" prefWidth="350.0" style="-fx-font-family: Fredoka; -fx-font-size: 20;" styleClass="text_" />
+            <Label layoutX="75.0" layoutY="207.0" text="Usuário" />
+            <Label layoutX="75.0" layoutY="312.0" text="Senha" />
+            <FontAwesomeIconView glyphName="USER" layoutX="55.0" layoutY="251.0" size="20" />
+            <FontAwesomeIconView glyphName="KEY" layoutX="55.0" layoutY="360.0" size="20" />
+         </children>
+      </AnchorPane>
+   </children>
+</FlowPane>
