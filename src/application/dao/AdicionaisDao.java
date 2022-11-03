@@ -37,9 +37,9 @@ public class AdicionaisDao {
 			break;
 		}
 		
-		PreparedStatement ps;
-		try {
-			ps = con.prepareStatement(sql);
+		
+		try(Connection con = ConnectionFactory.getConnection();
+		PreparedStatement ps = con.prepareStatement(sql);){
 			ps.execute();
 			ps.close();
 			Main.dialogBox(msg, 2);
@@ -82,14 +82,15 @@ public class AdicionaisDao {
 	public boolean matriculaverify(String matricula) {
 		
 		String sql = "SELECT emp_matricula FROM tb_adcionais WHERE emp_matricula='"+matricula+"'";
-		try {
-			PreparedStatement ps = con.prepareStatement(sql);
-			ResultSet rs;
-			rs = ps.executeQuery();
+		try(Connection con = ConnectionFactory.getConnection();
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();){
+			
+			
 			if(rs.next()) {
 				return true;
 			}
-			rs.close();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

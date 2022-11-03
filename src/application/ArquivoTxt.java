@@ -15,17 +15,27 @@ import java.util.List;
 import application.dao.RefeitorioDao;
 import application.dao.RelatorioDao;
 import application.model.Funcionario;
+import application.model.Imprimir;
 import application.model.Registro;
 
 public class ArquivoTxt {
 	private static RefeitorioDao dao;
 	private static RelatorioDao daorel;
+
 	public static void writeComprovante(String status, String idcartao) {
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String data = df.format(LocalDateTime.now());
 		Funcionario fun = new Funcionario();
 		dao = new RefeitorioDao();
-		String caminho = "C:\\Mais Sabor\\CAF\\comprovante.txt"; 
+		String caminho = "comprovante"; 
+		File f = null;
+		try {
+			f = File.createTempFile(caminho,".txt");
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			Main.dialogBox("Erro ao criar o arquivo temporário, tente novamente!", 1);
+			e1.printStackTrace();
+		}
 		if(!(idcartao.equals("9000077"))) {
 			fun = dao.Registro(idcartao,"funcionarios").get(0);
 		}else {
@@ -34,9 +44,10 @@ public class ArquivoTxt {
 		}
 		
 		
-		try(FileWriter fw = new FileWriter(caminho, false);
+		try(FileWriter fw = new FileWriter(f.getPath(), false);
 			BufferedWriter bf = new BufferedWriter(fw);
-			PrintWriter p = new PrintWriter(bf)) {
+			PrintWriter p = new PrintWriter(bf);) {
+				
 				p.println("CONTROLE DE ACESSO"
 						+ "\n"
 						+status.toUpperCase()
@@ -45,13 +56,13 @@ public class ArquivoTxt {
 						+"\nSetor: " + fun.get("setor")
 						+"\nData: " + data.substring(8,10) + "/" + data.substring(5,7) + "/" + data.substring(0, 4) + " - "+ data.substring(11, 19)
 						+ "\n\n\n");
-						
-				p.close();		
-				ImprimireDeletar(caminho);
+				p.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		ImprimireDeletar(f.getPath());
 	}
 	
 	public static void writeRel(String tprelatorio, String DataIni, String DataFim) {
@@ -62,7 +73,15 @@ public class ArquivoTxt {
 		Registro reg;
 		String data = "";
 		tprelatorio = tprelatorio.toLowerCase();
-		String caminho = "C:\\Mais Sabor\\CAF\\relatorio "+tprelatorio+".txt"; 
+		//String caminho = "C:\\Mais Sabor\\CAF\\relatorio "+tprelatorio+".txt"; 
+		File f = null;
+		try {
+			f = File.createTempFile(tprelatorio, ".txt");
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			Main.dialogBox("Erro ao criar o arquivo temporário", 1);
+			e1.printStackTrace();
+		}
 		List<Registro> registro = new ArrayList<>();
 		
 		//---------------------variaveis------------------------
@@ -84,7 +103,7 @@ public class ArquivoTxt {
 		}
 		//---------------------definindo o tipo de relatorio------------------------
 		//---------------------Identificando e escrevendo o relatorio------------------------
-		try(FileWriter fw = new FileWriter(caminho, false);
+		try(FileWriter fw = new FileWriter(f.getPath(), false);
 				BufferedWriter bf = new BufferedWriter(fw);
 				PrintWriter p = new PrintWriter(bf)) {
 			
@@ -249,10 +268,11 @@ public class ArquivoTxt {
 			//---------------------Identificando e escrevendo o relatorio------------------------
 			
 			p.close();
+	
 			if(tipo.equals("imprimir")) {
-				ImprimireDeletar(caminho);
+				ImprimireDeletar(f.getPath());
 			}else if(tipo.equals("abrir")) {
-				abrirarquivo(caminho);
+				abrirarquivo(f.getPath());
 			}
 			
 		} catch (IOException e) {
@@ -306,29 +326,32 @@ public class ArquivoTxt {
 		
 		return reg;
 	}
+	
 	public static String tratarlinhacomref(String tratavel, String ref) {
 		while (tratavel.length() < ref.length()) {
 			tratavel = tratavel + " ";
 		}
 		return tratavel;
 	}
+	
 	public static void ImprimireDeletar(String caminho) {
-		Desktop dk = Desktop.getDesktop();
+	
 		File file = new File(caminho);
-		try {
-			dk.print(file);
-			Thread.sleep(5000);
-		} catch (InterruptedException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	
+	
+		Imprimir imp = new Imprimir("A7",1,file);
+		//Desktop.getDesktop().print(file);
+		imp.imprimir();
 		file.delete();
+		
+		
 	}
 	public static void abrirarquivo(String caminho) {
-		Desktop dk = Desktop.getDesktop();
+		//Desktop dk =;
 		File file = new File(caminho);
 		try {
-			dk.open(file);
+			Desktop.getDesktop().open(file);
+			file.deleteOnExit();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -14,11 +14,11 @@ import application.model.Registro;
 
 public class RefeitorioDao {
 	public DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-	private static Connection con;
+	/*private static Connection con;
 	public RefeitorioDao() {
 		new ConnectionFactory();
 		con = ConnectionFactory.getConnection();
-	}
+	}*/
 	
 	
 	public List<String> lista() {
@@ -29,16 +29,19 @@ public class RefeitorioDao {
 				+ "cast(concat(hr_ini,\":00\") AS TIME) >= '22:00:00') OR (TIME(CURRENT_TIME()) <='04:00:00' AND cast(concat(hr_fim,\":00\") AS TIME) <='04:00:00');";
 		List<String> lista = new ArrayList<>();
 			
-			try {
+			try (Connection con = ConnectionFactory.getConnection();
 				PreparedStatement ps = con.prepareStatement(sql);
-				ResultSet rs = ps.executeQuery();
+				ResultSet rs = ps.executeQuery();){
+				
+				
 				
 				if(rs.next()) {
 							lista.add(rs.getString("nmtipo"));
 							lista.add(rs.getString("vrunit"));
 							lista.add(rs.getString("idtipo"));
 				}
-				}catch(SQLException e) {
+
+			}catch(SQLException e) {
 				e.printStackTrace();
 			}
 		
@@ -51,8 +54,8 @@ public class RefeitorioDao {
 				+ " reg_empregado = '"+reg.get("registro") +"', idtipo = '"+reg.get("idtipo") + "',"
 				+ " vrunit= '"+reg.get("vrunit") + "'";
 		
-		try {
-			PreparedStatement ps = con.prepareStatement(sql);
+		try (Connection con = ConnectionFactory.getConnection();
+			PreparedStatement ps = con.prepareStatement(sql);){
 			ps.execute();
 			ps.close();
 			
@@ -85,16 +88,27 @@ public class RefeitorioDao {
 		}
 		
 				
-			try {
-				PreparedStatement ps = con.prepareStatement(sql);
+			try (Connection con = ConnectionFactory.getConnection();
+			PreparedStatement ps = con.prepareStatement(sql);){
+				
 				ResultSet rs = ps.executeQuery();
 					if(valor == null) {
 						while(rs.next()) {
 							Funcionario func = new Funcionario();
+							String setor = "",funcao="",nome = "";
+							if(rs.getString("setor") != null){
+								setor = rs.getString("setor").trim();
+							}
+							if(rs.getString("funcao") != null){
+								funcao = rs.getString("funcao").trim();
+							}
+							if(rs.getString("nome") != null){
+								nome = rs.getString("nome").trim();
+							}
 							func.set("matricula", rs.getString("matricula"));
-							func.set("nome", rs.getString("nome"));
-							func.set("setor", rs.getString("setor"));
-							func.set("funcao", rs.getString("funcao"));
+							func.set("nome", nome);
+							func.set("setor", setor);
+							func.set("funcao", funcao);
 							func.set("status", rs.getString("nmstatus"));
 							func.set("ultimoacesso", rs.getString("r.hrreg"));
 		
@@ -105,11 +119,21 @@ public class RefeitorioDao {
 						//Unico funcionario
 						if(rs.next()) {
 							Funcionario func = new Funcionario();
+							String setor = "",funcao="",nome = "";
+							if(rs.getString("setor") != null){
+								setor = rs.getString("setor").trim();
+							}
+							if(rs.getString("funcao") != null){
+								funcao = rs.getString("funcao").trim();
+							}
+							if(rs.getString("nome") != null){
+								nome = rs.getString("nome").trim();
+							}
 							func.set("idcartao", rs.getString("idcartao"));
 							func.set("matricula", rs.getString("matricula"));
-							func.set("nome", rs.getString("nome"));
-							func.set("setor", rs.getString("setor"));
-							func.set("funcao", rs.getString("funcao"));
+							func.set("nome", nome);
+							func.set("setor", setor);
+							func.set("funcao", funcao);
 							//Se a tabela for nulo, quer dizer q esta pegando da tabela registro, entao pega status e dtreg
 							if(tabela ==null) {
 							func.set("status", rs.getString("nmstatus"));
@@ -127,14 +151,15 @@ public class RefeitorioDao {
 		return fun;
 	}
 
-	
 	public boolean verifica(String valor) {
 		
 		String 	sql = "SELECT idcartao FROM tb_funcionarios WHERE idcartao= '" + valor + "';";
 		
-		try {
+		try (Connection con = ConnectionFactory.getConnection();
 			PreparedStatement ps = con.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();){
+			
+			
 			if(rs.next()) {
 				
 				return true;
@@ -149,8 +174,9 @@ public class RefeitorioDao {
 	public String qtdlib(String valor) {
 		String sql = "SELECT qtdlib FROM tb_adcionais WHERE matricula= '" + valor + "';";
 		String qtdlib = "";
-		try {
-			PreparedStatement ps = con.prepareStatement(sql);
+		try (Connection con = ConnectionFactory.getConnection();
+		PreparedStatement ps = con.prepareStatement(sql);){
+			
 			ResultSet rs = ps.executeQuery();
 			
 			if(rs.next()) {
@@ -162,6 +188,7 @@ public class RefeitorioDao {
 					qtdlib = Integer.toString(i);
 				}
 			}
+			rs.close();
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
@@ -182,12 +209,14 @@ public class RefeitorioDao {
 			sql += "AND " + where;
 		}
 		
-		try {
-			PreparedStatement ps = con.prepareStatement(sql);
+		try (Connection con = ConnectionFactory.getConnection();
+		PreparedStatement ps = con.prepareStatement(sql);){
+			
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()) {
 				cont = rs.getString(1);
 			}
+			rs.close();
 			
 		}catch(SQLException e) {
 			e.printStackTrace();

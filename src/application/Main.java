@@ -37,6 +37,9 @@ public class Main extends Application {
 	private static HttpURLConnection connection;
 
 	public static void main(String[] args) {
+		System.setProperty("org.apache.commons.logging.Log",
+		"org.apache.commons.logging.impl.NoOpLog");
+		java.util.logging.Logger.getLogger("org.apache.pdfbox").setLevel(java.util.logging.Level.OFF);
 		launch(args);
 	}
 

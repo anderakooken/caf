@@ -7,6 +7,11 @@ module CAF {
 	requires java.desktop;
 	requires java.net.http;
 	requires org.json;
+	requires org.apache.fontbox;
+	requires org.apache.pdfbox;
+	requires itextpdf;
+	requires log4j;
+
 	opens application.controller;
 	opens application.dao;
 	opens util;

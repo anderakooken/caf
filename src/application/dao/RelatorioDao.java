@@ -11,26 +11,27 @@ import application.model.Combobox;
 import application.model.Registro;
 
 public class RelatorioDao {
-	Connection con;
+	/*Connection con;
 	public RelatorioDao() {
 		new ConnectionFactory();
 		con = ConnectionFactory.getConnection();
-	}
+	}*/
 	
 	public List<Combobox> listItems(){
 		List<Combobox> l = new ArrayList<>();
 		
 		String sql="SELECT idrelatorio as id, descrel as nome FROM tb_relatorios";
 		
-		try {
+		try (Connection con = ConnectionFactory.getConnection();
 			PreparedStatement ps = con.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();){
+			
+			
 			while(rs.next()) {
 				Combobox c = new Combobox(rs.getInt("id"), rs.getString("nome"));
 				l.add(c);
 			}
 				
-			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -89,9 +90,11 @@ public class RelatorioDao {
 			break;
 		}
 		
-		try {
+		try (Connection con = ConnectionFactory.getConnection();
 			PreparedStatement ps = con.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();){
+	
+			
 			if(!(tipo.toLowerCase().equals("faturamentoperiodo"))) {
 				while(rs.next()) {
 						Registro reg = new Registro();

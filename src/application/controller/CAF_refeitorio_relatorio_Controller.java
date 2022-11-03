@@ -43,23 +43,27 @@ public class CAF_refeitorio_relatorio_Controller {
     }
     
     @FXML void imprimir(ActionEvent event) {
-    	if(cbrelatorio.getValue().getId() == 1) {
-    		if(dpini.getValue() == null || dpfim.getValue() == null) {
-    			Main.dialogBox("As datas não podem ser vazias", 1);
-    			return;
-    		}
-    		ArquivoTxt.writeRel("periodo", dpini.getValue().toString(), dpfim.getValue().toString());
-    	}
-    	else if(cbrelatorio.getValue().getId() == 2) {
-    		if(dpfim.getValue() == null) {
-    			dpfim.setValue(dpini.getValue());
-    		}
-    		if(dpini.getValue() == null) {
-    			Main.dialogBox("A data não pode ser vazia!", 1);
-    			return;
-    		}
-    		ArquivoTxt.writeRel("dia", dpini.getValue().toString(), dpfim.getValue().toString());
-    		//excel.CriareImprimirRelatorioNutrionor("Relat�rio do Dia "+dateuni.getValue(), null, null, null, null);
-    	}
+		if(cbrelatorio.getValue() != null){
+			if(cbrelatorio.getValue().getId() == 1) {
+				if(dpini.getValue() == null || dpfim.getValue() == null) {
+					Main.dialogBox("As datas não podem ser vazias", 1);
+					return;
+				}
+				ArquivoTxt.writeRel("periodo", dpini.getValue().toString(), dpfim.getValue().toString());
+			}
+			else if(cbrelatorio.getValue().getId() == 2) {
+				if(dpfim.getValue() == null) {
+					dpfim.setValue(dpini.getValue());
+				}
+				if(dpini.getValue() == null) {
+					Main.dialogBox("A data não pode ser vazia!", 1);
+					return;
+				}
+				ArquivoTxt.writeRel("dia", dpini.getValue().toString(), dpfim.getValue().toString());
+				//excel.CriareImprimirRelatorioNutrionor("Relat�rio do Dia "+dateuni.getValue(), null, null, null, null);
+			}
+		}else{
+			Main.dialogBox("Selecione o tipo do relatório!", 1);
+		}
     }
 }

@@ -11,17 +11,19 @@ import application.Main;
 import application.model.Combobox;
 
 public class MainDao {
+	
 	private static Connection con;
-	@SuppressWarnings("static-access")
+
 	public MainDao() {
-		con = new ConnectionFactory().getConnection();
+		con = ConnectionFactory.getConnection();
 	}
 	
 	public boolean UserConfirm(String nmuser){
 		String sql = "SELECT * FROM tb_usuarios WHERE nmuser=?";
 
-		try {
-			PreparedStatement ps = con.prepareStatement(sql);
+		try(Connection con = ConnectionFactory.getConnection();
+			PreparedStatement ps = con.prepareStatement(sql)){
+			
 			ps.setString(1, nmuser);
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
@@ -46,8 +48,8 @@ public class MainDao {
 	public void alterPw(String matricula, String pwnova) {
 		String sql = "UPDATE tb_usuarios SET login='"+pwnova+"' WHERE matricula='"+matricula+"'";
 		
-		try {
-			PreparedStatement ps = con.prepareStatement(sql);
+		try (Connection con = ConnectionFactory.getConnection();
+		PreparedStatement ps = con.prepareStatement(sql)){
 			ps.execute();
 			ps.close();
 			
@@ -61,8 +63,9 @@ public class MainDao {
 		List<Combobox> lista = new ArrayList<>();
 		String sql = "SELECT "+ID+" as id, "+nome+" as nome FROM "+tabela;
 		if(!(ID == null || ID.isEmpty() || nome == null || nome.isEmpty() || tabela == null || tabela.isEmpty())) {
-			try {
-				PreparedStatement ps = con.prepareStatement(sql);
+			try (Connection con = ConnectionFactory.getConnection();
+			PreparedStatement ps = con.prepareStatement(sql)){
+			
 				ResultSet rs = ps.executeQuery();
 				
 				while(rs.next()) {

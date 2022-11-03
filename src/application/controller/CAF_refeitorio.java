@@ -8,11 +8,13 @@ import java.util.List;
 
 import application.ArquivoTxt;
 import application.Main;
+import application.ModifyScenes;
 import application.dao.RefeitorioDao;
 import application.model.Funcionario;
 import application.model.Registro;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +23,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class CAF_refeitorio {
@@ -92,6 +95,13 @@ public class CAF_refeitorio {
     	
     	initTable();
     	hora();
+		Platform.runLater(()->{
+			Main.Stagemain.hide();
+			txtmatricula.getScene().getWindow().setOnCloseRequest(e->{
+				Main.Stagemain.show();
+				ModifyScenes.close();
+			});
+		});
     }
     
 	public @FXML void btnadicionar(ActionEvent event) {
@@ -163,8 +173,8 @@ public class CAF_refeitorio {
 		if(l.size() != -1) {
 			funcionario = l.get(0);
 			txtnome.setText(funcionario.get("nome"));
-			txtsetor.setText(funcionario.get("setor"));
-			txtfuncao.setText(funcionario.get("funcao"));
+			txtsetor.setText(funcionario.get("setor").trim());
+			txtfuncao.setText(funcionario.get("funcao").trim());
 			//pegando a matricula real para salvar no banco de dados em breve
 			matrc_real = funcionario.get("matricula");
 			

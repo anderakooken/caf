@@ -12,12 +12,12 @@ import application.model.Combobox;
 import application.model.Funcionario;
 
 public class FuncionarioDao {
-	private Connection con;
+	/*private Connection con;
 	
 	public FuncionarioDao(){
 		new ConnectionFactory();
 		con = ConnectionFactory.getConnection();
-	}
+	}*/
 	
 	public void funCED(Funcionario f, int tipo) {
 		String sql = "";
@@ -41,9 +41,9 @@ public class FuncionarioDao {
 			break;
 		}
 		
-			PreparedStatement ps;
-			try {
-				ps = con.prepareStatement(sql);
+			
+			try(Connection con = ConnectionFactory.getConnection();
+				PreparedStatement ps = con.prepareStatement(sql);){
 				ps.execute();
 				ps.close();
 			} catch (SQLException e) {
@@ -63,7 +63,9 @@ public class FuncionarioDao {
 			sql += "AND "+where;
 		}
 		List<Funcionario> l = new ArrayList<>();
-		try(PreparedStatement ps = con.prepareStatement(sql);
+		
+		try(Connection con = ConnectionFactory.getConnection();
+			PreparedStatement ps = con.prepareStatement(sql);
 			ResultSet rs = ps.executeQuery();){
 			while(rs.next()) {
 				Funcionario f = new Funcionario();
@@ -77,7 +79,6 @@ public class FuncionarioDao {
 				f.set("registro", rs.getString("registro"));
 				l.add(f);
 			}
-			rs.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -91,7 +92,8 @@ public class FuncionarioDao {
 		List<Combobox> l = new ArrayList<>();
 		
 		String sql="SELECT "+valor+" as nome FROM tb_funcionarios GROUP BY "+valor;
-		try(PreparedStatement ps = con.prepareStatement(sql);
+		try(Connection con = ConnectionFactory.getConnection();
+			PreparedStatement ps = con.prepareStatement(sql);
 				ResultSet rs = ps.executeQuery();){
 			int i=0;
 			while(rs.next()) {
@@ -99,7 +101,7 @@ public class FuncionarioDao {
 				 Combobox c = new Combobox(i,rs.getString("nome"));
 				 l.add(c);
 			}
-			rs.close();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

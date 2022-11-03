@@ -69,9 +69,7 @@ public class ModifyScenes {
 		if(listS.lastIndexOf(stage) != -1) {
 			listS.remove(listS.indexOf(stage));
 		}
-		if(i==1) {
-			Main.Stagemain.setOnCloseRequest(e -> Platform.exit());
-		}
+		
 		
 		i--;
 	}

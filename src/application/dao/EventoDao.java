@@ -11,12 +11,12 @@ import application.Main;
 import application.model.Evento;
 
 public class EventoDao {
-	private Connection con;
+	/*private Connection con;
 	
 	public EventoDao() {
 		new ConnectionFactory();
 		con = ConnectionFactory.getConnection();
-	}
+	}*/
 	
 	
 	public void CED(int tipo, Evento e) {
@@ -39,8 +39,9 @@ public class EventoDao {
 			break;
 		}
 		
-		try {
-			PreparedStatement ps = con.prepareStatement(sql);
+		try (Connection con = ConnectionFactory.getConnection();
+			PreparedStatement ps = con.prepareStatement(sql);){
+			
 			ps.execute();
 			ps.close();
 			
@@ -56,9 +57,11 @@ public class EventoDao {
 		String sql = "SELECT * FROM tb_tipos_refeicoes";
 		
 		
-		try {
+		try (Connection con = ConnectionFactory.getConnection();
 			PreparedStatement ps = con.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery();
+			ResultSet rs = ps.executeQuery();){
+			
+			
 			while(rs.next()) {
 				Evento e = new Evento();
 				e.set("nome", rs.getString("nmtipo"));
@@ -94,10 +97,12 @@ public class EventoDao {
 				+ where
 				+ "ORDER BY tb_refeicoes_dia.dtlnc DESC , tb_refeicoes_dia.idtipo;";
 		
-		PreparedStatement ps;
-		try {
-			ps = con.prepareStatement(sql);
-			ResultSet rs = ps.executeQuery();
+
+		try (Connection con = ConnectionFactory.getConnection();
+			PreparedStatement ps = con.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();){
+			
+			
 			
 			while(rs.next()) {
 				Evento e = new Evento();
