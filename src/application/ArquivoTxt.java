@@ -30,7 +30,7 @@ public class ArquivoTxt {
 	private static final Logger log = Logger.getLogger(ArquivoTxt.class);
 	private static Thread th = new Thread();
 	private static Thread toPrint = new Thread();
-	private static JSONObject cacheJSON = new JSONObject();
+	private static volatile JSONObject cacheJSON = new JSONObject();
 
 	public static void writeComprovante(String status, String idcartao) {
 
@@ -381,16 +381,10 @@ public class ArquivoTxt {
 					for (int i = 0; i < printers.length(); i++) {
 						
 						try{
-		
+						
 							File printer = new File(printers.getString(i));
 		
 							if(printer.exists()){
-		
-								Imprimir imprimir = new Imprimir(
-									"A7",
-									1, 
-									printer
-								);
 								
 								int seconds = 0;
 
@@ -409,13 +403,22 @@ public class ArquivoTxt {
 								if(toPrint.isAlive()){
 
 									toPrint.stop();
+					
 									log.error("Erro ao imprimir!");
+								
 									return;
 									
 								}else{
+									Imprimir imprimir = new Imprimir(
+											"A7",
+											1, 
+											printer
+										);
 									toPrint = new Thread(() ->{
 										imprimir.imprimir();
-										printer.delete();
+										if(!imprimir.deleteFile()){
+											log.warn("Erro ao deletar o arquivo!");
+										}
 									});
 
 									toPrint.start();
@@ -511,7 +514,9 @@ public class ArquivoTxt {
 				
 
 			}else{
+
 				File folder = new File(System.getenv("APPDATA") + "\\CAF");
+
 				if (!folder.exists()) {
 					if(folder.mkdir()){
 						fileJSON.createNewFile();

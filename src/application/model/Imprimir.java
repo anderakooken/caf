@@ -106,7 +106,9 @@ public class Imprimir {
         }
     }
 
-   
+    public boolean deleteFile(){
+        return this.file.delete();
+    }
 
     //Seta o tamanho do papel em tamanho inch
     public void setSize(int Size){
