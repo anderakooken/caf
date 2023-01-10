@@ -37,7 +37,7 @@ public class CAF_inicio_Controller {
     private @FXML Pane panelogin;
     private Stage stage = Main.Stagemain;
     private MainDao dao = new MainDao();
-	private String cache = System.getenv("APPDATA") + "\\CAF\\" + ".cache";
+	private static final String cache = System.getenv("APPDATA") + "\\CAF\\" + ".cache";
     private SimpleDateFormat formatador = new SimpleDateFormat("HH:mm:ss");
     JSONObject json = new JSONObject();
     String msg_a = "Você não tem permissão de acesso.";

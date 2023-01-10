@@ -22,6 +22,7 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import application.ArquivoTxt;
 import application.Main;
 
 import java.awt.print.*;
@@ -65,7 +66,8 @@ public class Imprimir {
                 e1.printStackTrace();
         }
         
-            try (PDDocument document = PDDocument.load(pdf)) {
+        try (PDDocument document = PDDocument.load(pdf)) {
+
                 PrinterJob job = PrinterJob.getPrinterJob();
                 job.setPageable(new PDFPageable(document));
 
@@ -93,15 +95,14 @@ public class Imprimir {
                 job.setPageable(book);
                // PrintRequestAttributeSet att = new HashPrintRequestAttributeSet(new PageRanges(1,30));
                 
-                BasicConfigurator.configure();
-            
+                BasicConfigurator.configure();   
                 job.print();
-                
-            
         } catch (NullPointerException | IOException | PrinterException e) {
                 // TODO Auto-generated catch block
+              
                 e.printStackTrace();
                 Main.dialogBox("Erro ao imprimir o documento!", 1);
+                ArquivoTxt.saveFileCache(this.file.getAbsolutePath());
         }
     }
 
@@ -129,6 +130,7 @@ public class Imprimir {
         }
     }
 
+
     private void Converter(String input, String pdf){
         try { 
                 FileReader reader = new FileReader(input);
@@ -149,4 +151,5 @@ public class Imprimir {
                 e.printStackTrace();
         } 
     }
+
 }

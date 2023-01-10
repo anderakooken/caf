@@ -3,6 +3,8 @@ package application;
 import java.awt.Desktop;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,6 +14,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import application.dao.RefeitorioDao;
 import application.dao.RelatorioDao;
 import application.model.Funcionario;
@@ -21,8 +26,14 @@ import application.model.Registro;
 public class ArquivoTxt {
 	private static RefeitorioDao dao;
 	private static RelatorioDao daorel;
+	private static final String strFileJSON = System.getenv("APPDATA") + "\\CAF\\" + "\\printers.json";
+	private static final Logger log = Logger.getLogger(ArquivoTxt.class);
+	private static Thread th = new Thread();
+	private static Thread toPrint = new Thread();
+	private static JSONObject cacheJSON = new JSONObject();
 
 	public static void writeComprovante(String status, String idcartao) {
+
 		DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String data = df.format(LocalDateTime.now());
 		Funcionario fun = new Funcionario();
@@ -334,18 +345,206 @@ public class ArquivoTxt {
 		return tratavel;
 	}
 	
+	/**
+	 * Método para imprimir e deletar o arquivo
+	 * @param caminho
+	 */
 	public static void ImprimireDeletar(String caminho) {
 	
-		File file = new File(caminho);
-	
-	
-		Imprimir imp = new Imprimir("A7",1,file);
-		//Desktop.getDesktop().print(file);
-		imp.imprimir();
-		file.delete();
-		
-		
+		saveFileCache(caminho);
+
+		if(!th.isAlive()){
+			th = new Thread(() -> {
+				PrintFilesInCache();
+			});
+			th.setPriority(Thread.MAX_PRIORITY);
+			th.start();
+		}
+
+
 	}
+
+	/**
+	 * Imprime arquivos que estão no cache JSON (que não foram imprimidos)
+	 */
+	public static void PrintFilesInCache(){
+		try{
+
+			if(ExistsFilesToPrint()){
+				
+				if(cacheJSON.has("printers")){
+
+					JSONArray printers = cacheJSON.getJSONArray("printers");
+
+					
+						
+					for (int i = 0; i < printers.length(); i++) {
+						
+						try{
+		
+							File printer = new File(printers.getString(i));
+		
+							if(printer.exists()){
+		
+								Imprimir imprimir = new Imprimir(
+									"A7",
+									1, 
+									printer
+								);
+								
+								int seconds = 0;
+
+								while(toPrint.isAlive() && seconds < 5){
+
+									try {
+										Thread.sleep(1000);
+										seconds++;
+									} catch (InterruptedException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+
+								}
+
+								if(toPrint.isAlive()){
+
+									toPrint.stop();
+									log.error("Erro ao imprimir!");
+									return;
+									
+								}else{
+									toPrint = new Thread(() ->{
+										imprimir.imprimir();
+										printer.delete();
+									});
+
+									toPrint.start();
+								}
+
+								
+		
+							}
+
+							
+		
+						}catch(NullPointerException e){
+							log.error("Error NullPointer no FOR :: PrintFilesInCache()",e);
+						}
+						
+					}
+
+					cacheJSON.remove("printers");
+
+					FileOutputStream writeFile = new FileOutputStream(strFileJSON);
+					writeFile.write(cacheJSON.toString().getBytes());
+					writeFile.close();
+				}
+			
+
+			}
+			
+
+		}catch(IOException e){
+
+			log.error("Erro ao ler o arquivo das impressões pendentes no arquivo JSON!", e);
+
+		}
+	}
+
+
+	/**
+	 * Função para verificar se existe arquivos no cache arrayJSON para imprimir.
+	 */
+	public static boolean ExistsFilesToPrint(){
+		try{
+			File fileCache = new File(strFileJSON);
+			if(fileCache.exists()){
+
+				FileInputStream readFile = new FileInputStream(strFileJSON);
+				cacheJSON = new JSONObject(new String(readFile.readAllBytes()));
+				readFile.close();
+				
+				if(cacheJSON.has("printers")){
+
+					JSONArray printers = cacheJSON.getJSONArray("printers");
+
+					if(printers.length() > 0){
+				
+						return true;
+
+					}
+				}
+
+			}
+		
+		}catch(IOException e){
+			log.error("Erro ao verificar o arquivo", e);
+		}
+
+		return false;
+	}
+
+	/**
+	 * Salva o caminho do arquivo como cache no arquivo JSON.
+	 * @param caminho
+	 */
+	public static void saveFileCache(String caminho){
+
+		try{
+			File fileJSON = new File(strFileJSON);
+			
+			JSONArray filesNotPrinted = new JSONArray();
+			
+			
+
+			if(fileJSON.exists()){
+
+				FileInputStream readFile = new FileInputStream(fileJSON);
+				cacheJSON = new JSONObject(new String(readFile.readAllBytes()));
+				readFile.close();
+
+				if(cacheJSON.has("printers")){
+
+					filesNotPrinted = cacheJSON.getJSONArray("printers");
+
+				}
+				
+
+			}else{
+				File folder = new File(System.getenv("APPDATA") + "\\CAF");
+				if (!folder.exists()) {
+					if(folder.mkdir()){
+						fileJSON.createNewFile();
+					}else{
+						return;
+					}
+					
+				}else{
+					fileJSON.createNewFile();
+				}
+
+				
+
+			}
+
+			filesNotPrinted.put(caminho);
+			cacheJSON.put("printers", filesNotPrinted);
+
+			FileOutputStream writeFile = new FileOutputStream(fileJSON);
+			writeFile.write(cacheJSON.toString().getBytes());
+			writeFile.close();
+			
+		}catch(IOException e){
+
+			log.error("Erro ao salvar o print no arquivo JSON!", e);
+
+		}
+	}
+
+	/**
+	 * Método para abrir um arquivo.
+	 * @param caminho
+	 */
 	public static void abrirarquivo(String caminho) {
 		//Desktop dk =;
 		File file = new File(caminho);
